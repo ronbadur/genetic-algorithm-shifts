@@ -1,4 +1,4 @@
-package entities;
+package dynamic.entities;
 
 public class Shift {
 

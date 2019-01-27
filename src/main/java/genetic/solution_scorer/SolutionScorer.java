@@ -1,4 +1,4 @@
-package solution_scorer;
+package genetic.solution_scorer;
 
 public class SolutionScorer {
 }

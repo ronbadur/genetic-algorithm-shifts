@@ -1,4 +1,4 @@
-package entities;
+package genetic.entities;
 
 import java.util.Random;
 
