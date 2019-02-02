@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="">
+    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="feat(Genetic Algorithm): changed population to be a list of individuals instead of array">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" afterDir="false" />
     </list>
@@ -30,26 +30,25 @@
       <file leaf-file-name="SimpleDemoGA.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="86" column="50" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
+            <state relative-caret-position="409">
+              <caret line="155" column="76" selection-start-line="155" selection-start-column="76" selection-end-line="155" selection-end-column="76" />
               <folding>
                 <element signature="docComment;class#SimpleDemoGA#0" />
                 <element signature="e#1731#1733#0" />
                 <element signature="method#mutation#0;class#SimpleDemoGA#0" />
                 <element signature="e#2499#2534#0" />
                 <element signature="method#getFittestOffspring#0;class#SimpleDemoGA#0" />
-                <element signature="method#addFittestOffspring#0;class#SimpleDemoGA#0" />
                 <element signature="e#4312#4348#0" />
                 <element signature="method#print#0;class#Constraint#0" />
                 <element signature="method#Individual#0;class#Individual#0" />
                 <element signature="method#print#0;class#Individual#0" />
                 <element signature="method#printMatrix#0;class#Individual#0" />
                 <element signature="method#isValid#0;class#Individual#0" />
-                <element signature="method#initializePopulation#0;class#Population#0" />
-                <element signature="method#getLeastFittestIndex#0;class#Population#0" />
+                <element signature="e#9189#9190#0" expanded="true" />
+                <element signature="e#9215#9216#0" expanded="true" />
                 <element signature="method#calculateFitness#0;class#Population#0" />
-                <element signature="method#printWithFitness#0;class#Population#0" />
-                <element signature="e#9907#9974#0" />
+                <element signature="e#10859#10860#0" expanded="true" />
+                <element signature="e#10913#10914#0" expanded="true" />
                 <element signature="class#GenAlgoUtilities#0" />
               </folding>
             </state>
@@ -699,7 +698,7 @@
       <workItem from="1546595733550" duration="2431000" />
       <workItem from="1547155721192" duration="6000" />
       <workItem from="1548616187060" duration="286000" />
-      <workItem from="1548620246781" duration="22405000" />
+      <workItem from="1548620246781" duration="22933000" />
     </task>
     <task id="LOCAL-00001" summary="created simple demo of genetic algorithm">
       <created>1549037914306</created>
@@ -743,11 +742,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549112769765</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat(Genetic Algorithm): made a deep copy for genes">
+      <created>1549112810277</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1549112810277</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25128000" />
+    <option name="totallyTimeSpent" value="25656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -799,7 +805,8 @@
     <MESSAGE value="feat(Genetic Algorithm): made a Utility for all the global variables" />
     <MESSAGE value="feat(Genetic Algorithm): implement isValid for individual, and added it to fitness method" />
     <MESSAGE value="feat(Genetic Algorithm): made a deep copy for genes" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): made a deep copy for genes" />
+    <MESSAGE value="feat(Genetic Algorithm): changed population to be a list of individuals instead of array" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): changed population to be a list of individuals instead of array" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -931,26 +938,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="86" column="50" selection-start-line="86" selection-start-column="50" selection-end-line="86" selection-end-column="50" />
+        <state relative-caret-position="409">
+          <caret line="155" column="76" selection-start-line="155" selection-start-column="76" selection-end-line="155" selection-end-column="76" />
           <folding>
             <element signature="docComment;class#SimpleDemoGA#0" />
             <element signature="e#1731#1733#0" />
             <element signature="method#mutation#0;class#SimpleDemoGA#0" />
             <element signature="e#2499#2534#0" />
             <element signature="method#getFittestOffspring#0;class#SimpleDemoGA#0" />
-            <element signature="method#addFittestOffspring#0;class#SimpleDemoGA#0" />
             <element signature="e#4312#4348#0" />
             <element signature="method#print#0;class#Constraint#0" />
             <element signature="method#Individual#0;class#Individual#0" />
             <element signature="method#print#0;class#Individual#0" />
             <element signature="method#printMatrix#0;class#Individual#0" />
             <element signature="method#isValid#0;class#Individual#0" />
-            <element signature="method#initializePopulation#0;class#Population#0" />
-            <element signature="method#getLeastFittestIndex#0;class#Population#0" />
+            <element signature="e#9189#9190#0" expanded="true" />
+            <element signature="e#9215#9216#0" expanded="true" />
             <element signature="method#calculateFitness#0;class#Population#0" />
-            <element signature="method#printWithFitness#0;class#Population#0" />
-            <element signature="e#9907#9974#0" />
+            <element signature="e#10859#10860#0" expanded="true" />
+            <element signature="e#10913#10914#0" expanded="true" />
             <element signature="class#GenAlgoUtilities#0" />
           </folding>
         </state>

@@ -1,6 +1,8 @@
 package genetic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static genetic.GenAlgoUtilities.*;
@@ -151,7 +153,7 @@ public class SimpleDemoGA {
         int leastFittestIndex = population.getLeastFittestIndex();
 
         //Replace least fittest individual from most fittest offspring
-        population.individuals[leastFittestIndex] = getFittestOffspring();
+        population.individuals.set(leastFittestIndex, getFittestOffspring());
     }
 
 }
@@ -289,22 +291,26 @@ class Individual {
 //Population class
 class Population {
 
-    Individual[] individuals;
+    List<Individual> individuals;
     int fittest = 0;
 
     //Initialize population
     public void initializePopulation(int size) {
-        individuals = new Individual[size];
+        individuals = new ArrayList<>();
 
-        for (int i = 0; i < individuals.length; i++) {
-            individuals[i] = new Individual();
+        for (int i = 0; i < size; i++) {
+            individuals.add(new Individual());
         }
+    }
+
+    public void add(Individual individual) {
+        individuals.add(individual);
     }
 
     //Get the fittest individual
     public Individual getFittest() {
         int maxFit = Integer.MIN_VALUE;
-        Individual maxFitIndividual = individuals[0];
+        Individual maxFitIndividual = individuals.get(0);
 
         for (Individual individual: individuals) {
             if (maxFit <= individual.fitness) {
@@ -321,24 +327,24 @@ class Population {
         int maxFit1 = 0;
         int maxFit2 = 0;
 
-        for (int i = 0; i < individuals.length; i++) {
-            if (individuals[i].fitness > individuals[maxFit1].fitness) {
+        for (int i = 0; i < individuals.size(); i++) {
+            if (individuals.get(i).fitness > individuals.get(maxFit1).fitness) {
                 maxFit2 = maxFit1;
                 maxFit1 = i;
-            } else if (individuals[i].fitness > individuals[maxFit2].fitness) {
+            } else if (individuals.get(i).fitness > individuals.get(maxFit2).fitness) {
                 maxFit2 = i;
             }
         }
-        return individuals[maxFit2];
+        return individuals.get(maxFit2);
     }
 
     //Get index of least fittest individual
     public int getLeastFittestIndex() {
         int minFitVal = Integer.MAX_VALUE;
         int minFitIndex = 0;
-        for (int i = 0; i < individuals.length; i++) {
-            if (minFitVal >= individuals[i].fitness) {
-                minFitVal = individuals[i].fitness;
+        for (int i = 0; i < individuals.size(); i++) {
+            if (minFitVal >= individuals.get(i).fitness) {
+                minFitVal = individuals.get(i).fitness;
                 minFitIndex = i;
             }
         }
@@ -355,11 +361,11 @@ class Population {
     }
 
     public void print(){
-        Arrays.asList(individuals).forEach(Individual::print);
+        individuals.forEach(Individual::print);
     }
 
     public void printWithFitness(){
-        Arrays.asList(individuals).forEach(individual -> {
+        individuals.forEach(individual -> {
             individual.print();
             System.out.println("fitness: " + individual.fitness);
         });
