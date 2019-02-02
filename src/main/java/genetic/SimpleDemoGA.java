@@ -14,10 +14,7 @@ import static genetic.Individual.printMatrix;
 
 //Main class
 public class SimpleDemoGA {
-
-
     private Population population = new Population();
-
     private Individual fittest;
     private Individual secondFittest;
     private int generationCount = 0;
@@ -38,7 +35,6 @@ public class SimpleDemoGA {
 
         SimpleDemoGA demo = new SimpleDemoGA();
         //Constraint constraints = new Constraint( NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS);
-
 
         Constraint constraints = new Constraint(manualConstraints);
         constraints.print();
@@ -237,7 +233,6 @@ class Individual {
 
     //Calculate fitness
     public void calcFitness(Constraint constraints) {
-
         fitness = 0;
 
         if (this.isValid()) {
@@ -252,18 +247,24 @@ class Individual {
     }
 
     public boolean isValid() {
-        boolean isValid = true;
-
         //Set genes randomly for each individual
         for (int day = 0; day < genes[0].length; day++) {
             for (int shift = 0; shift < genes[0][day].length; shift++) {
-                // who of the workers will get the shift
-                int worker = Math.abs(rn.nextInt() % NUM_OF_WORKERS);
-                genes[worker][day][shift] = 1;
+                int numOfWorkersInShift = 0;
+
+                for (int worker = 0; worker < genes.length; worker++) {
+                    if (genes[worker][day][shift] == 1) {
+                        numOfWorkersInShift++;
+                    }
+                }
+
+                if (numOfWorkersInShift > 1) {
+                    return false;
+                }
             }
         }
 
-        return isValid;
+        return true;
     }
 }
 
