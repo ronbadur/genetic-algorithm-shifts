@@ -85,11 +85,6 @@ public class SimpleDemoGA {
 
         //Select the most fittest individual
         fittest = population.getFittest().clone();
-        fittest.genes[0][0][0] = 0;
-        fittest.genes[0][0][1] = 0;
-        fittest.genes[0][1][0] = 0;
-        fittest.genes[0][1][1] = 0;
-
 
         //Select the second most fittest individual
         secondFittest = population.getSecondFittest().clone();
