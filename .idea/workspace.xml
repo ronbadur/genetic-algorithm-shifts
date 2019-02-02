@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="feat(Genetic Algorithm): generated individual that is specific for our problem">
+    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="feat(Genetic Algorithm): implemented initialize individual,&#10;generate constraint, make your own constraint,&#10;basic fitness method and pretty prints for debugging">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GeneticAlgorithm.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GeneticAlgorithm.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -43,34 +46,47 @@
       <file leaf-file-name="SimpleDemoGA.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="169" column="18" lean-forward="true" selection-start-line="169" selection-start-column="18" selection-end-line="169" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrintStream.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/io/PrintStream.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="869" column="23" selection-start-line="869" selection-start-column="23" selection-end-line="869" selection-end-column="23" />
+            <state relative-caret-position="247">
+              <caret line="101" column="66" lean-forward="true" selection-start-line="101" selection-start-column="66" selection-end-line="101" selection-end-column="66" />
               <folding>
-                <element signature="e#29974#29975#0" expanded="true" />
-                <element signature="e#30017#30018#0" expanded="true" />
+                <element signature="docComment;class#SimpleDemoGA#0" />
+                <element signature="method#mutation#0;class#SimpleDemoGA#0" />
+                <element signature="e#2499#2534#0" />
+                <element signature="method#getFittestOffspring#0;class#SimpleDemoGA#0" />
+                <element signature="method#addFittestOffspring#0;class#SimpleDemoGA#0" />
+                <element signature="e#4312#4348#0" />
+                <element signature="class#Constraint#0" />
+                <element signature="method#Constraint#0;class#Constraint#0" />
+                <element signature="method#Constraint#0;class#Constraint#0" />
+                <element signature="method#print#0;class#Constraint#0" />
+                <element signature="class#Individual#0" />
+                <element signature="method#Individual#0;class#Individual#0" />
+                <element signature="method#print#0;class#Individual#0" />
+                <element signature="method#printMatrix#0;class#Individual#0" />
+                <element signature="method#calcFitness#0;class#Individual#0" />
+                <element signature="class#Population#0" />
+                <element signature="method#initializePopulation#0;class#Population#0" />
+                <element signature="method#getFittest#0;class#Population#0" />
+                <element signature="method#getSecondFittest#0;class#Population#0" />
+                <element signature="method#getLeastFittestIndex#0;class#Population#0" />
+                <element signature="method#calculateFitness#0;class#Population#0" />
+                <element signature="method#printWithFitness#0;class#Population#0" />
+                <element signature="e#9907#9974#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Random.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/util/Random.java">
+      <file leaf-file-name="GeneticAlgorithm.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GeneticAlgorithm.iml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="Consumer.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/function/Consumer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="327" column="15" selection-start-line="327" selection-start-column="15" selection-end-line="327" selection-end-column="15" />
-              <folding>
-                <element signature="e#11985#11986#0" expanded="true" />
-                <element signature="e#12016#12017#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="134">
+              <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -90,6 +106,9 @@
       <find>i</find>
       <find>getFittestOffspring</find>
       <find>print</find>
+      <find>maxFit</find>
+      <find>fitte</find>
+      <find>fittest</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -189,7 +208,10 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Ron/IdeaProjects" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
     <UpdatedFiles>
@@ -707,7 +729,7 @@
       <workItem from="1546595733550" duration="2431000" />
       <workItem from="1547155721192" duration="6000" />
       <workItem from="1548616187060" duration="286000" />
-      <workItem from="1548620246781" duration="7390000" />
+      <workItem from="1548620246781" duration="16748000" />
     </task>
     <task id="LOCAL-00001" summary="created simple demo of genetic algorithm">
       <created>1549037914306</created>
@@ -716,11 +738,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549037914306</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat(Genetic Algorithm): generated individual that is specific for our problem">
+      <created>1549041864466</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1549041864466</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10113000" />
+    <option name="totallyTimeSpent" value="19471000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -728,7 +757,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.3287234" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3287234" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -736,11 +765,11 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32978722" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3287234" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22234042" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32901832" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -767,11 +796,32 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created simple demo of genetic algorithm" />
     <MESSAGE value="feat(Genetic Algorithm): generated individual that is specific for our problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): generated individual that is specific for our problem" />
+    <MESSAGE value="feat(Genetic Algorithm): implemented initialize individual,&#10;generate constraint, make your own constraint,&#10;basic fitness method and pretty prints for debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): implemented initialize individual,&#10;generate constraint, make your own constraint,&#10;basic fitness method and pretty prints for debugging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="7" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java</url>
+          <line>306</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java</url>
+          <line>234</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java</url>
+          <line>61</line>
+          <properties />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -842,7 +892,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/util/Random.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
+        <state relative-caret-position="-8">
           <caret line="327" column="15" selection-start-line="327" selection-start-column="15" selection-end-line="327" selection-end-column="15" />
           <folding>
             <element signature="e#11985#11986#0" expanded="true" />
@@ -853,7 +903,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/io/PrintStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
+        <state relative-caret-position="-8">
           <caret line="869" column="23" selection-start-line="869" selection-start-column="23" selection-end-line="869" selection-end-column="23" />
           <folding>
             <element signature="e#29974#29975#0" expanded="true" />
@@ -862,12 +912,141 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_60/src.zip!/java/util/function/Consumer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="169" column="18" lean-forward="true" selection-start-line="169" selection-start-column="18" selection-end-line="169" selection-end-column="18" />
+        <state relative-caret-position="308">
+          <caret line="60" column="42" lean-forward="true" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/function/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GeneticAlgorithm.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="101" column="66" lean-forward="true" selection-start-line="101" selection-start-column="66" selection-end-line="101" selection-end-column="66" />
+          <folding>
+            <element signature="docComment;class#SimpleDemoGA#0" />
+            <element signature="method#mutation#0;class#SimpleDemoGA#0" />
+            <element signature="e#2499#2534#0" />
+            <element signature="method#getFittestOffspring#0;class#SimpleDemoGA#0" />
+            <element signature="method#addFittestOffspring#0;class#SimpleDemoGA#0" />
+            <element signature="e#4312#4348#0" />
+            <element signature="class#Constraint#0" />
+            <element signature="method#Constraint#0;class#Constraint#0" />
+            <element signature="method#Constraint#0;class#Constraint#0" />
+            <element signature="method#print#0;class#Constraint#0" />
+            <element signature="class#Individual#0" />
+            <element signature="method#Individual#0;class#Individual#0" />
+            <element signature="method#print#0;class#Individual#0" />
+            <element signature="method#printMatrix#0;class#Individual#0" />
+            <element signature="method#calcFitness#0;class#Individual#0" />
+            <element signature="class#Population#0" />
+            <element signature="method#initializePopulation#0;class#Population#0" />
+            <element signature="method#getFittest#0;class#Population#0" />
+            <element signature="method#getSecondFittest#0;class#Population#0" />
+            <element signature="method#getLeastFittestIndex#0;class#Population#0" />
+            <element signature="method#calculateFitness#0;class#Population#0" />
+            <element signature="method#printWithFitness#0;class#Population#0" />
+            <element signature="e#9907#9974#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>GeneticAlgorithm</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
