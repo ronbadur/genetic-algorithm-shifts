@@ -49,12 +49,13 @@ public class SimpleDemoGA {
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.getFittest().fitness);
 
         //While population gets an individual with maximum fitness
-        while (demo.population.fittest < 3) {
+        while (demo.population.fittest < 5) {
             ++demo.generationCount;
 
             //Do selection
             demo.selection();
 
+            demo.population.printWithFitness();
             //Do crossover
             demo.crossover();
 //
@@ -83,19 +84,26 @@ public class SimpleDemoGA {
     private void selection() {
 
         //Select the most fittest individual
-        fittest = population.getFittest();
+        fittest = population.getFittest().clone();
+        fittest.genes[0][0][0] = 0;
+        fittest.genes[0][0][1] = 0;
+        fittest.genes[0][1][0] = 0;
+        fittest.genes[0][1][1] = 0;
+
 
         //Select the second most fittest individual
-        secondFittest = population.getSecondFittest();
+        secondFittest = population.getSecondFittest().clone();
     }
 
     //Crossover
     private void crossover() {
-//        Random rn = new Random();
-//
-//        //Select a random crossover point
-//        int crossOverPoint = rn.nextInt(population.individuals[0].geneLength);
-//
+        Random rn = new Random();
+
+        //Select a random crossover point
+        int crossOverPointWorker = rn.nextInt(fittest.genes.length);
+        int crossOverPointDay = rn.nextInt(fittest.genes[0].length);
+        int crossOverPointShift = rn.nextInt(fittest.genes[0][0].length);
+
 //        //Swap values among parents
 //        for (int i = 0; i < crossOverPoint; i++) {
 //            int temp = fittest.genes[i];
@@ -137,7 +145,6 @@ public class SimpleDemoGA {
         return secondFittest;
     }
 
-
     //Replace least fittest individual from most fittest offspring
     private void addFittestOffspring() {
 
@@ -170,7 +177,7 @@ class Constraint {
             for (int day = 0; day < NUM_OF_DAYS; day++) {
                 for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
                     // who of the workers will get the shift
-                    int isAvailable = Math.abs(rn.nextInt() % 2);
+                    int isAvailable = rn.nextInt(1);
                     constraints[worker][day][shift] = isAvailable;
                 }
             }
@@ -200,7 +207,7 @@ class Individual {
             for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
                 // who of the workers will get the shift
                 // TODO: for more workers, add a loop here.
-                int worker = Math.abs(rn.nextInt() % NUM_OF_WORKERS);
+                int worker = rn.nextInt(NUM_OF_WORKERS);
                 genes[worker][day][shift] = 1;
             }
         }
@@ -266,12 +273,27 @@ class Individual {
 
         return true;
     }
+
+    @Override
+    protected Individual clone() {
+        Individual a = new Individual();
+        a.fitness = fitness;
+
+        for (int worker = 0; worker < genes.length; worker++) {
+            for (int day = 0; day < genes[worker].length; day++) {
+                for (int shift = 0; shift < genes[worker][day].length; shift++) {
+                    a.genes[worker][day][shift] = genes[worker][day][shift];
+                }
+            }
+        }
+
+        return a;
+    }
 }
 
 //Population class
 class Population {
 
-    int popSize = 10;
     Individual[] individuals;
     int fittest = 0;
 
