@@ -1,8 +1,11 @@
 package genetic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+import static genetic.GenAlgoUtilities.*;
 import static genetic.Individual.printMatrix;
 
 /**
@@ -13,12 +16,7 @@ import static genetic.Individual.printMatrix;
 
 //Main class
 public class SimpleDemoGA {
-    static final private int NUM_OF_WORKERS = 2;
-    static final private int NUM_OF_DAYS = 2;
-    static final private int NUM_OF_SHIFTS = 2;
-
     private Population population = new Population();
-
     private Individual fittest;
     private Individual secondFittest;
     private int generationCount = 0;
@@ -40,12 +38,11 @@ public class SimpleDemoGA {
         SimpleDemoGA demo = new SimpleDemoGA();
         //Constraint constraints = new Constraint( NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS);
 
-
         Constraint constraints = new Constraint(manualConstraints);
         constraints.print();
 
         //Initialize population
-        demo.population.initializePopulation(10, NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS);
+        demo.population.initializePopulation(10);
 
         //Calculate fitness of each individual
         demo.population.calculateFitness(constraints);
@@ -54,12 +51,13 @@ public class SimpleDemoGA {
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.getFittest().fitness);
 
         //While population gets an individual with maximum fitness
-        while (demo.population.fittest < 3) {
+        while (demo.population.fittest < 5) {
             ++demo.generationCount;
 
             //Do selection
             demo.selection();
 
+            demo.population.printWithFitness();
             //Do crossover
             demo.crossover();
 //
@@ -78,7 +76,7 @@ public class SimpleDemoGA {
         }
 
         System.out.println("\nSolution found in generation " + demo.generationCount);
-        System.out.println("Fitness: "+demo.population.getFittest().fitness);
+        System.out.println("Fitness: " + demo.population.getFittest().fitness);
         System.out.print("Genes: \n");
         demo.population.getFittest().print();
 
@@ -88,19 +86,21 @@ public class SimpleDemoGA {
     private void selection() {
 
         //Select the most fittest individual
-        fittest = population.getFittest();
+        fittest = population.getFittest().clone();
 
         //Select the second most fittest individual
-        secondFittest = population.getSecondFittest();
+        secondFittest = population.getSecondFittest().clone();
     }
 
     //Crossover
     private void crossover() {
-//        Random rn = new Random();
-//
-//        //Select a random crossover point
-//        int crossOverPoint = rn.nextInt(population.individuals[0].geneLength);
-//
+        Random rn = new Random();
+
+        //Select a random crossover point
+        int crossOverPointWorker = rn.nextInt(fittest.genes.length);
+        int crossOverPointDay = rn.nextInt(fittest.genes[0].length);
+        int crossOverPointShift = rn.nextInt(fittest.genes[0][0].length);
+
 //        //Swap values among parents
 //        for (int i = 0; i < crossOverPoint; i++) {
 //            int temp = fittest.genes[i];
@@ -142,7 +142,6 @@ public class SimpleDemoGA {
         return secondFittest;
     }
 
-
     //Replace least fittest individual from most fittest offspring
     private void addFittestOffspring() {
 
@@ -154,30 +153,19 @@ public class SimpleDemoGA {
         int leastFittestIndex = population.getLeastFittestIndex();
 
         //Replace least fittest individual from most fittest offspring
-        population.individuals[leastFittestIndex] = getFittestOffspring();
+        population.individuals.set(leastFittestIndex, getFittestOffspring());
     }
 
 }
 
 class Constraint {
     int[][][] constraints;
-    int NUM_OF_WORKERS;
-    int NUM_OF_DAYS;
-    int NUM_OF_SHIFTS;
 
     public Constraint(int[][][] constraints) {
-        this.NUM_OF_WORKERS = constraints.length;
-        this.NUM_OF_DAYS = constraints[0].length;
-        this.NUM_OF_SHIFTS = constraints[0][0].length;
-
         this.constraints = constraints;
     }
 
-    public Constraint(int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS) {
-        this.NUM_OF_WORKERS = NUM_OF_WORKERS;
-        this.NUM_OF_DAYS = NUM_OF_DAYS;
-        this.NUM_OF_SHIFTS = NUM_OF_SHIFTS;
-
+    public Constraint() {
         constraints = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
         Random rn = new Random();
 
@@ -186,21 +174,17 @@ class Constraint {
             for (int day = 0; day < NUM_OF_DAYS; day++) {
                 for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
                     // who of the workers will get the shift
-                    int isAvailable = Math.abs(rn.nextInt() % 2);
+                    int isAvailable = rn.nextInt(1);
                     constraints[worker][day][shift] = isAvailable;
                 }
             }
         }
     }
 
-    public int maxFitnessCanBe() {
-        return NUM_OF_DAYS * NUM_OF_SHIFTS;
-    }
-
     public void print() {
         System.out.println("---------constraints---------");
         printMatrix(constraints);
-        System.out.println("Max Fitness Can Be: " + NUM_OF_DAYS * NUM_OF_SHIFTS);
+        System.out.println("Max Fitness Can Be: " + maxFitnessCanBe());
     }
 }
 
@@ -209,16 +193,18 @@ class Individual {
 
     int fitness;
     int[][][] genes;
+    Random rn;
 
-    public Individual(int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS) {
+    public Individual() {
         genes = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
-        Random rn = new Random();
+        rn = new Random();
 
         //Set genes randomly for each individual
         for (int day = 0; day < NUM_OF_DAYS; day++) {
             for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
                 // who of the workers will get the shift
-                int worker = Math.abs(rn.nextInt() % NUM_OF_WORKERS);
+                // TODO: for more workers, add a loop here.
+                int worker = rn.nextInt(NUM_OF_WORKERS);
                 genes[worker][day][shift] = 1;
             }
         }
@@ -251,38 +237,80 @@ class Individual {
 
     //Calculate fitness
     public void calcFitness(Constraint constraints) {
-
         fitness = 0;
-        for (int worker = 0; worker < genes.length; worker++) {
-            for (int day = 0; day < genes[worker].length; day++) {
-                for(int shift = 0; shift < genes[worker][day].length; shift++) {
-                    fitness += constraints.constraints[worker][day][shift] * genes[worker][day][shift];
+
+        if (this.isValid()) {
+            for (int worker = 0; worker < genes.length; worker++) {
+                for (int day = 0; day < genes[worker].length; day++) {
+                    for (int shift = 0; shift < genes[worker][day].length; shift++) {
+                        fitness += constraints.constraints[worker][day][shift] * genes[worker][day][shift];
+                    }
                 }
             }
         }
+    }
+
+    public boolean isValid() {
+        //Set genes randomly for each individual
+        for (int day = 0; day < genes[0].length; day++) {
+            for (int shift = 0; shift < genes[0][day].length; shift++) {
+                int numOfWorkersInShift = 0;
+
+                for (int worker = 0; worker < genes.length; worker++) {
+                    if (genes[worker][day][shift] == 1) {
+                        numOfWorkersInShift++;
+                    }
+                }
+
+                if (numOfWorkersInShift > 1) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    protected Individual clone() {
+        Individual a = new Individual();
+        a.fitness = fitness;
+
+        for (int worker = 0; worker < genes.length; worker++) {
+            for (int day = 0; day < genes[worker].length; day++) {
+                for (int shift = 0; shift < genes[worker][day].length; shift++) {
+                    a.genes[worker][day][shift] = genes[worker][day][shift];
+                }
+            }
+        }
+
+        return a;
     }
 }
 
 //Population class
 class Population {
 
-    int popSize = 10;
-    Individual[] individuals;
+    List<Individual> individuals;
     int fittest = 0;
 
     //Initialize population
-    public void initializePopulation(int size, int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS) {
-        individuals = new Individual[size];
+    public void initializePopulation(int size) {
+        individuals = new ArrayList<>();
 
-        for (int i = 0; i < individuals.length; i++) {
-            individuals[i] = new Individual(NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS);
+        for (int i = 0; i < size; i++) {
+            individuals.add(new Individual());
         }
+    }
+
+    public void add(Individual individual) {
+        individuals.add(individual);
     }
 
     //Get the fittest individual
     public Individual getFittest() {
         int maxFit = Integer.MIN_VALUE;
-        Individual maxFitIndividual = individuals[0];
+        Individual maxFitIndividual = individuals.get(0);
 
         for (Individual individual: individuals) {
             if (maxFit <= individual.fitness) {
@@ -299,24 +327,24 @@ class Population {
         int maxFit1 = 0;
         int maxFit2 = 0;
 
-        for (int i = 0; i < individuals.length; i++) {
-            if (individuals[i].fitness > individuals[maxFit1].fitness) {
+        for (int i = 0; i < individuals.size(); i++) {
+            if (individuals.get(i).fitness > individuals.get(maxFit1).fitness) {
                 maxFit2 = maxFit1;
                 maxFit1 = i;
-            } else if (individuals[i].fitness > individuals[maxFit2].fitness) {
+            } else if (individuals.get(i).fitness > individuals.get(maxFit2).fitness) {
                 maxFit2 = i;
             }
         }
-        return individuals[maxFit2];
+        return individuals.get(maxFit2);
     }
 
     //Get index of least fittest individual
     public int getLeastFittestIndex() {
         int minFitVal = Integer.MAX_VALUE;
         int minFitIndex = 0;
-        for (int i = 0; i < individuals.length; i++) {
-            if (minFitVal >= individuals[i].fitness) {
-                minFitVal = individuals[i].fitness;
+        for (int i = 0; i < individuals.size(); i++) {
+            if (minFitVal >= individuals.get(i).fitness) {
+                minFitVal = individuals.get(i).fitness;
                 minFitIndex = i;
             }
         }
@@ -333,13 +361,23 @@ class Population {
     }
 
     public void print(){
-        Arrays.asList(individuals).forEach(Individual::print);
+        individuals.forEach(Individual::print);
     }
 
     public void printWithFitness(){
-        Arrays.asList(individuals).forEach(individual -> {
+        individuals.forEach(individual -> {
             individual.print();
             System.out.println("fitness: " + individual.fitness);
         });
+    }
+}
+
+class GenAlgoUtilities {
+    static final public int NUM_OF_WORKERS = 2;
+    static final public int NUM_OF_DAYS = 2;
+    static final public int NUM_OF_SHIFTS = 2;
+
+    public static int maxFitnessCanBe() {
+        return NUM_OF_DAYS * NUM_OF_SHIFTS;
     }
 }
