@@ -67,6 +67,7 @@ public class SimpleDemoGA {
             //Do crossover
             demo.crossover(Math.round(populationSize * 0.64f));
 
+
             //Do mutation
             demo.mutation(Math.round(populationSize * 0.28f));
 
@@ -120,17 +121,18 @@ public class SimpleDemoGA {
             second = population.individuals.get(i + 1).clone();
 
             //Select a random crossover point
-            int crossOverPointWorker = rn.nextInt(NUM_OF_WORKERS);
+            int crossOverPoint = rn.nextInt((NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS) - 1);
 
-            //Swap values among parents
-            for (int worker = crossOverPointWorker; worker < NUM_OF_WORKERS; worker++) {
-                for (int day = 0; day < NUM_OF_DAYS; day++) {
-                    for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
-                        int temp = first.genes[worker][day][shift];
-                        first.genes[worker][day][shift] = second.genes[worker][day][shift];
-                        second.genes[worker][day][shift] = temp;
-                    }
-                }
+            for (int j = crossOverPoint; j < (NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS); j++) {
+
+                int worker = j / (NUM_OF_SHIFTS * NUM_OF_DAYS);
+                int day = (j % (NUM_OF_SHIFTS * NUM_OF_DAYS)) / NUM_OF_SHIFTS;
+                int shift = j % NUM_OF_SHIFTS;
+
+                int temp = first.genes[worker][day][shift];
+                first.genes[worker][day][shift] =
+                        second.genes[worker][day][shift];
+                second.genes[worker][day][shift] = temp;
             }
 
             newPopulation.add(first);
@@ -149,7 +151,7 @@ public class SimpleDemoGA {
         Individual first, second;
         for (int i = 0; i < count - 1; i++) {
             first = population.individuals.get(i).clone();
-            second = population.individuals.get(i + 1).clone();
+            second = population.individuals.get(rn.nextInt(count - i) + i).clone();
 
             //Flip values at the mutation point
             if (first.genes[mutationPointWorker][mutationPointDay][mutationPointShift] == 0) {
