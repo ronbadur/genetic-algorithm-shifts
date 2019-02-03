@@ -1,26 +1,37 @@
 package genetic.entities;
 
+import java.util.Random;
+
+import static genetic.entities.GenAlgoUtilities.*;
+import static genetic.entities.Individual.printMatrix;
+
 public class Constraint {
 
-    private Long id;
-    private Long shiftId;
+    int[][][] constraints;
+
+    public Constraint(int[][][] constraints) {
+        this.constraints = constraints;
+    }
 
     public Constraint() {
+        constraints = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
+        Random rn = new Random();
+
+        //Set genes randomly for each individual
+        for (int worker = 0; worker < NUM_OF_DAYS; worker++) {
+            for (int day = 0; day < NUM_OF_DAYS; day++) {
+                for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
+                    // who of the workers will get the shift
+                    int isAvailable = rn.nextInt(1);
+                    constraints[worker][day][shift] = isAvailable;
+                }
+            }
+        }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getShiftId() {
-        return shiftId;
-    }
-
-    public void setShiftId(Long shiftId) {
-        this.shiftId = shiftId;
+    public void print() {
+        System.out.println("---------constraints---------");
+        printMatrix(constraints);
+        System.out.println("Max Fitness Can Be: " + maxFitnessCanBe());
     }
 }
