@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import static genetic.GenAlgoUtilities.*;
+import static genetic.GenAlgoUtilities.Constraint.Available;
+import static genetic.GenAlgoUtilities.Constraint.NotAvailable;
 import static genetic.Individual.printMatrix;
 
 /**
@@ -24,20 +26,20 @@ public class SimpleDemoGA {
         int populationSize = 50;
         int[][][] manualConstraints = {
                 {
-                        {1, 1, 0},
-                        {0, 1, 1}
+                        {Available.getValue(), Available.getValue(), NotAvailable.getValue()},
+                        {NotAvailable.getValue(), Available.getValue(), Available.getValue()}
                 },
                 {
-                        {1, 0, 0},
-                        {1, 1, 0}
+                        {Available.getValue(), NotAvailable.getValue(), NotAvailable.getValue()},
+                        {Available.getValue(), Available.getValue(), NotAvailable.getValue()}
                 },
                 {
-                        {0, 1, 1},
-                        {0, 0, 0}
+                        {NotAvailable.getValue(), Available.getValue(), Available.getValue()},
+                        {NotAvailable.getValue(), NotAvailable.getValue(), NotAvailable.getValue()}
                 },
                 {
-                        {0, 0, 1},
-                        {1, 0, 1}
+                        {NotAvailable.getValue(), NotAvailable.getValue(), Available.getValue()},
+                        {Available.getValue(), NotAvailable.getValue(), Available.getValue()}
                 }
         };
 
@@ -58,15 +60,11 @@ public class SimpleDemoGA {
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.getFittest().fitness);
 
         //While population gets an individual with maximum fitness
-        while (demo.population.fittest < GenAlgoUtilities.maxFitnessCanBe()) {
+        while (demo.population.fittest < (Available.getValue() * GenAlgoUtilities.maxFitnessCanBe())) {
             ++demo.generationCount;
-
-            //Do selection
-            demo.selection();
 
             //Do crossover
             demo.crossover(Math.round(populationSize * 0.64f));
-
 
             //Do mutation
             demo.mutation(Math.round(populationSize * 0.28f));
@@ -100,15 +98,6 @@ public class SimpleDemoGA {
         for (int i = 0; i < count; i++) {
             newPopulation.add(new Individual());
         }
-    }
-
-    // Selection
-    private void selection() {
-//        //Select the most fittest individual
-//        fittest = population.getFittest().clone();
-//
-//        //Select the second most fittest individual
-//        secondFittest = population.getSecondFittest().clone();
     }
 
     // Crossover
@@ -360,35 +349,6 @@ class Population {
         return maxFitIndividual;
     }
 
-    //Get the second most fittest individual
-    public Individual getSecondFittest() {
-        int maxFit1 = 0;
-        int maxFit2 = 0;
-
-        for (int i = 0; i < individuals.size(); i++) {
-            if (individuals.get(i).fitness > individuals.get(maxFit1).fitness) {
-                maxFit2 = maxFit1;
-                maxFit1 = i;
-            } else if (individuals.get(i).fitness > individuals.get(maxFit2).fitness) {
-                maxFit2 = i;
-            }
-        }
-        return individuals.get(maxFit2);
-    }
-
-    //Get index of least fittest individual
-    public int getLeastFittestIndex() {
-        int minFitVal = Integer.MAX_VALUE;
-        int minFitIndex = 0;
-        for (int i = 0; i < individuals.size(); i++) {
-            if (minFitVal >= individuals.get(i).fitness) {
-                minFitVal = individuals.get(i).fitness;
-                minFitIndex = i;
-            }
-        }
-        return minFitIndex;
-    }
-
     //Calculate fitness of each individual
     public void calculateFitness(Constraint constraints) {
         for (Individual individual : individuals) {
@@ -419,9 +379,10 @@ class Population {
 
 class GenAlgoUtilities {
     public enum Constraint {
-        Available(100),
-        NotInterested(10),
-        NotAvailable(1);
+        Available(1000),
+        NotInterested(100),
+        NotAvailable(10),
+        NotAvailableAtAll(1);
 
         private int value;
         Constraint(int value) {

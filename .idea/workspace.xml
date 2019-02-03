@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="feat(Genetic Algorithm): changed population to be a list of individuals instead of array">
+    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" afterDir="false" />
     </list>
@@ -15,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/genetic_algorithm_shifts$SimpleDemoGA.ic" NAME="SimpleDemoGA Coverage Results" MODIFIED="1549145097783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/genetic_algorithm_shifts$SimpleDemoGA.ic" NAME="SimpleDemoGA Coverage Results" MODIFIED="1549229425916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>genetic.*</FILTER>
     </SUITE>
   </component>
@@ -30,8 +30,8 @@
       <file leaf-file-name="SimpleDemoGA.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-126">
-              <caret line="30" column="34" lean-forward="true" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+            <state relative-caret-position="455">
+              <caret line="62" column="103" lean-forward="true" selection-start-line="62" selection-start-column="103" selection-end-line="62" selection-end-column="103" />
               <folding>
                 <element signature="docComment;class#SimpleDemoGA#0" />
                 <element signature="method#print#0;class#Constraint#0" />
@@ -49,6 +49,15 @@
                 <element signature="e#12430#12431#0" expanded="true" />
                 <element signature="e#12466#12467#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArrayList.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="1087" selection-start-line="1087" selection-end-line="1087" />
             </state>
           </provider>
         </entry>
@@ -88,6 +97,7 @@
       <find>cros</find>
       <find>fitnes</find>
       <find>fiten</find>
+      <find>add</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -208,7 +218,6 @@
           <option name="myId" value="UPDATED" />
           <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/dynamic/Main.java</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/dynamic/algorithm/IntelligentAlgorithm.java</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/dynamic/algorithm/Knapsack.java</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -708,7 +717,7 @@
       <workItem from="1547155721192" duration="6000" />
       <workItem from="1548616187060" duration="286000" />
       <workItem from="1548620246781" duration="23887000" />
-      <workItem from="1549122821027" duration="15605000" />
+      <workItem from="1549122821027" duration="23319000" />
     </task>
     <task id="LOCAL-00001" summary="created simple demo of genetic algorithm">
       <created>1549037914306</created>
@@ -766,11 +775,25 @@
       <option name="project" value="LOCAL" />
       <updated>1549113343283</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat(Genetic Algorithm): improved the algorithm">
+      <created>1549147192237</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1549147192238</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(Genetic Algorithm): improved the crossover">
+      <created>1549229662801</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1549229662801</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42215000" />
+    <option name="totallyTimeSpent" value="49929000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -795,12 +818,12 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32978722" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30638298" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30638298" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.3296875" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32901832" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32978722" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -808,7 +831,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3148936" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.34893617" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info id="Nl-Palette" order="2" />
@@ -832,25 +855,28 @@
     <MESSAGE value="feat(Genetic Algorithm): implement isValid for individual, and added it to fitness method" />
     <MESSAGE value="feat(Genetic Algorithm): made a deep copy for genes" />
     <MESSAGE value="feat(Genetic Algorithm): changed population to be a list of individuals instead of array" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): changed population to be a list of individuals instead of array" />
+    <MESSAGE value="feat(Genetic Algorithm): improved the algorithm" />
+    <MESSAGE value="feat(Genetic Algorithm): improved the crossover" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(Genetic Algorithm): improved the crossover" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java</url>
-          <line>83</line>
+          <line>126</line>
           <properties />
-          <option name="timeStamp" value="37" />
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="rn.nextInt()" language="JAVA" />
         <watch expression="demo.newPopulation" language="JAVA" />
         <watch expression="((java.util.ArrayList.SubList)((Population)this).individuals).get(52)" custom="genetic.Population,java.util.ArrayList.SubList" />
+        <watch expression="j" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
@@ -859,7 +885,34 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>demo.generationCount &gt;= 100</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>demo.generationCount &gt; 1000</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>demo.generationCount &gt; 10000</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>demo.generationCount &gt; 20000</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="watch">
+      <expression>
+        <expression-string>j</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>demo.newPopulation</expression-string>
         <language-id>JAVA</language-id>
@@ -986,10 +1039,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="1087" selection-start-line="1087" selection-end-line="1087" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-126">
-          <caret line="30" column="34" lean-forward="true" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+        <state relative-caret-position="455">
+          <caret line="62" column="103" lean-forward="true" selection-start-line="62" selection-start-column="103" selection-end-line="62" selection-end-column="103" />
           <folding>
             <element signature="docComment;class#SimpleDemoGA#0" />
             <element signature="method#print#0;class#Constraint#0" />
