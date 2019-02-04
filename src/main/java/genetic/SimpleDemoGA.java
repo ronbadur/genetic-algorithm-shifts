@@ -64,24 +64,32 @@ public class SimpleDemoGA {
             ++demo.generationCount;
 
             //Do crossover
-            demo.crossover(Math.round(populationSize * 0.64f));
+            demo.crossover(Math.round(populationSize * 0.5f));
 
             //Do mutation
-            demo.mutation(Math.round(populationSize * 0.28f));
+            demo.mutation(Math.round(populationSize * 0.4f));
 
             // Create new randomize
-            demo.createNewRandomize(Math.round(populationSize * 0.08f));
+            demo.createNewRandomize(Math.round(populationSize * 0.1f));
 
-            //Add offsprings to population
-            demo.population.add(demo.newPopulation);
+            //Cut the half worst offsprings
+            demo.newPopulation.calculateFitness(constraints);
+            demo.newPopulation.sort();
+            demo.newPopulation.individuals = demo.newPopulation.individuals.subList(0, Math.round(populationSize * 0.5f));
 
-            //Calculate new fitness value
+            //Cut the half worst of old population
             demo.population.calculateFitness(constraints);
             demo.population.sort();
-            demo.population.individuals = demo.population.individuals.subList(0, populationSize);
+            demo.population.individuals = demo.population.individuals.subList(0, Math.round(populationSize * 0.5f));
 
+            // Add them together
+            demo.population.add(demo.newPopulation);
             demo.newPopulation.clear();
-            System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.fittest);
+
+//            demo.population.calculateFitness(constraints);
+//            demo.population.printWithFitness();
+            System.out.println("Generation: " + demo.generationCount + " Population total Fitness: " +
+                    demo.population.populationTotalFitness + " Fittest: " + demo.population.fittest);
         }
 
         System.out.println("\nSolution found in generation " + demo.generationCount);
@@ -109,10 +117,12 @@ public class SimpleDemoGA {
             first = population.individuals.get(i).clone();
             second = population.individuals.get(i + 1).clone();
 
-            //Select a random crossover point
-            int crossOverPoint = rn.nextInt((NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS) - 1);
+            // -1 is for including Zero
+            final int MAX_POINT = (NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS) - 1;
+            int crossOverStartPoint = rn.nextInt(MAX_POINT);
+            int crossOverEndPoint = rn.nextInt(MAX_POINT - crossOverStartPoint) + crossOverStartPoint;
 
-            for (int j = crossOverPoint; j < (NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS); j++) {
+            for (int j = crossOverStartPoint; j <= crossOverEndPoint; j++) {
 
                 int worker = j / (NUM_OF_SHIFTS * NUM_OF_DAYS);
                 int day = (j % (NUM_OF_SHIFTS * NUM_OF_DAYS)) / NUM_OF_SHIFTS;
@@ -125,6 +135,7 @@ public class SimpleDemoGA {
             }
 
             newPopulation.add(first);
+            newPopulation.add(second);
         }
     }
 
@@ -132,35 +143,34 @@ public class SimpleDemoGA {
     private void mutation(int count) {
         Random rn = new Random();
 
-        //Select a random mutation point
-        int mutationPointWorker = rn.nextInt(NUM_OF_WORKERS);
-        int mutationPointDay = rn.nextInt(NUM_OF_DAYS);
-        int mutationPointShift = rn.nextInt(NUM_OF_SHIFTS);
-
         Individual first, second;
         for (int i = 0; i < count - 1; i++) {
             first = population.individuals.get(i).clone();
-            second = population.individuals.get(rn.nextInt(count - i) + i).clone();
+            second = population.individuals.get(i + 1).clone();
 
-            //Flip values at the mutation point
-            if (first.genes[mutationPointWorker][mutationPointDay][mutationPointShift] == 0) {
-                first.genes[mutationPointWorker][mutationPointDay][mutationPointShift] = 1;
-            } else {
-                first.genes[mutationPointWorker][mutationPointDay][mutationPointShift] = 0;
+            // -1 is for including Zero
+            final int MAX_POINT = (NUM_OF_WORKERS * NUM_OF_DAYS * NUM_OF_SHIFTS) - 1;
+            int crossOverStartPoint = rn.nextInt(MAX_POINT);
+            int crossOverEndPoint = rn.nextInt(MAX_POINT - crossOverStartPoint) + crossOverStartPoint;
+
+            for (int j = crossOverStartPoint; j <= crossOverEndPoint; j++) {
+
+                int worker = j / (NUM_OF_SHIFTS * NUM_OF_DAYS);
+                int day = (j % (NUM_OF_SHIFTS * NUM_OF_DAYS)) / NUM_OF_SHIFTS;
+                int shift = j % NUM_OF_SHIFTS;
+
+
+                first.genes[worker][day][shift] = rn.nextInt(1);
+//                //Flip values at the mutation point
+//                if (first.genes[worker][day][shift] == 0) {
+//                    first.genes[worker][day][shift] = 1;
+//                } else {
+//                    first.genes[worker][day][shift] = 0;
+//                }
+
             }
-
-            mutationPointWorker = rn.nextInt(NUM_OF_WORKERS);
-            mutationPointDay = rn.nextInt(NUM_OF_DAYS);
-            mutationPointShift = rn.nextInt(NUM_OF_SHIFTS);
-
-            // Flip again
-            if (second.genes[mutationPointWorker][mutationPointDay][mutationPointShift] == 0) {
-                second.genes[mutationPointWorker][mutationPointDay][mutationPointShift] = 1;
-            } else {
-                second.genes[mutationPointWorker][mutationPointDay][mutationPointShift] = 0;
-            }
-
             newPopulation.add(first);
+            newPopulation.add(second);
         }
     }
 }
@@ -313,7 +323,10 @@ class Individual implements Comparable {
 class Population {
 
     List<Individual> individuals;
+
+    // Before checking this values, you need to run calculateFitness
     int fittest = 0;
+    int populationTotalFitness = 0;
 
     public Population() {
         individuals = new ArrayList<>();
@@ -351,8 +364,11 @@ class Population {
 
     //Calculate fitness of each individual
     public void calculateFitness(Constraint constraints) {
+        populationTotalFitness = 0;
+
         for (Individual individual : individuals) {
             individual.calcFitness(constraints);
+            populationTotalFitness += individual.fitness;
         }
 
         fittest = getFittest().fitness;
@@ -362,6 +378,7 @@ class Population {
         individuals.clear();
         fittest = 0;
     }
+
     public void print(){
         individuals.forEach(Individual::print);
     }
@@ -369,6 +386,7 @@ class Population {
     public void sort() {
         individuals.sort(Individual::compareTo);
     }
+
     public void printWithFitness(){
         individuals.forEach(individual -> {
             individual.print();
