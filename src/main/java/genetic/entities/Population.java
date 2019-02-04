@@ -1,12 +1,15 @@
 package genetic.entities;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Population {
+
     public List<Individual> individuals;
+
+    // Before checking this values, you need to run calculateFitness
     public int fittest = 0;
+    public int populationTotalFitness = 0;
 
     public Population() {
         individuals = new ArrayList<>();
@@ -44,8 +47,11 @@ public class Population {
 
     //Calculate fitness of each individual
     public void calculateFitness(Constraint constraints) {
+        populationTotalFitness = 0;
+
         for (Individual individual : individuals) {
             individual.calcFitness(constraints);
+            populationTotalFitness += individual.fitness;
         }
 
         fittest = getFittest().fitness;
@@ -55,6 +61,7 @@ public class Population {
         individuals.clear();
         fittest = 0;
     }
+
     public void print(){
         individuals.forEach(Individual::print);
     }
@@ -62,11 +69,11 @@ public class Population {
     public void sort() {
         individuals.sort(Individual::compareTo);
     }
+
     public void printWithFitness(){
         individuals.forEach(individual -> {
             individual.print();
             System.out.println("fitness: " + individual.fitness);
         });
     }
-
 }

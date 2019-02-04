@@ -1,12 +1,11 @@
 package genetic.entities;
 
-import genetic.*;
-
 import java.util.Random;
 
 import static genetic.entities.GenAlgoUtilities.*;
 
-public class Individual implements Comparable{
+public class Individual implements Comparable {
+
     public int fitness;
     public int[][][] genes;
     Random rn;
@@ -91,7 +90,7 @@ public class Individual implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        Individual individual2 = (Individual) o;
+        Individual individual2 = (Individual)o;
         if (fitness > individual2.fitness) {
             return -1;
         } else if (fitness == individual2.fitness) {
