@@ -1,14 +1,15 @@
 package genetic;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import genetic.entities.Constraint;
+import genetic.entities.GenAlgoUtilities;
+import genetic.entities.Individual;
+import genetic.entities.Population;
+
 import java.util.Random;
 
-import static genetic.GenAlgoUtilities.*;
-import static genetic.GenAlgoUtilities.Constraint.Available;
-import static genetic.GenAlgoUtilities.Constraint.NotAvailable;
-import static genetic.Individual.printMatrix;
+import static genetic.entities.GenAlgoUtilities.*;
+import static genetic.entities.ConstraintEnum.*;
+
 
 /**
  *
