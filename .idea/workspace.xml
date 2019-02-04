@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="">
+    <list default="true" id="d18877a0-f852-4508-87f7-b746dc1ccf7b" name="Default" comment="feat(Genetic Algorithm): optimizing cross and mutation">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genetic/entities/Constraint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/entities/Constraint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genetic/entities/GenAlgoUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/entities/GenAlgoUtilities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genetic/entities/Individual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/entities/Individual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/genetic/entities/Population.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/genetic/entities/Population.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genetic/SimpleDemoGA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genetic/SimpleDemoGA.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genetic/entities/Constraint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genetic/entities/Constraint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genetic/entities/Individual.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genetic/entities/Individual.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/genetic/entities/Population.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/genetic/entities/Population.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -31,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="SimpleDemoGA.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SimpleDemoGA.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="161" column="16" selection-start-line="161" selection-start-column="16" selection-end-line="161" selection-end-column="16" />
+            <state relative-caret-position="244">
+              <caret line="148" column="22" selection-start-line="148" selection-start-column="22" selection-end-line="148" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,11 +43,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Individual.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/entities/Individual.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+            <state relative-caret-position="168">
+              <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/genetic/entities/Population.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="363">
-              <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+              <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#340#341#0" expanded="true" />
@@ -83,7 +92,6 @@
             <state relative-caret-position="42">
               <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
               <folding>
-                <element signature="e#607#608#0" expanded="true" />
                 <element signature="e#683#684#0" expanded="true" />
               </folding>
             </state>
@@ -183,6 +191,7 @@
         <option value="$PROJECT_DIR$/src/main/java/genetic/entities/Population.java" />
         <option value="$PROJECT_DIR$/src/main/java/genetic/entities/Individual.java" />
         <option value="$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -236,26 +245,7 @@
             <path>
               <item name="genetic-algorithm-shifts" type="b2602c69:ProjectViewProjectNode" />
               <item name="genetic-algorithm-shifts" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="genetic-algorithm-shifts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="genetic-algorithm-shifts" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="genetic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="genetic-algorithm-shifts" type="b2602c69:ProjectViewProjectNode" />
-              <item name="genetic-algorithm-shifts" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="genetic" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -822,7 +812,7 @@
       <workItem from="1547155721192" duration="6000" />
       <workItem from="1548616187060" duration="286000" />
       <workItem from="1548620246781" duration="23887000" />
-      <workItem from="1549122821027" duration="28964000" />
+      <workItem from="1549122821027" duration="29238000" />
     </task>
     <task id="LOCAL-00001" summary="created simple demo of genetic algorithm">
       <created>1549037914306</created>
@@ -908,11 +898,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549313749855</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat(Genetic Algorithm): optimizing cross and mutation">
+      <created>1549314504020</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1549314504020</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55574000" />
+    <option name="totallyTimeSpent" value="55848000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -942,7 +939,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32901832" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13802083" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32978722" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -950,7 +947,7 @@
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4638298" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4638298" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info id="Nl-Palette" order="2" />
@@ -1177,7 +1174,6 @@
         <state relative-caret-position="42">
           <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="e#607#608#0" expanded="true" />
             <element signature="e#683#684#0" expanded="true" />
           </folding>
         </state>
@@ -1197,7 +1193,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/genetic/entities/Population.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
-          <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+          <caret line="19" column="40" lean-forward="true" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#340#341#0" expanded="true" />
@@ -1216,8 +1212,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/genetic/entities/Individual.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+        <state relative-caret-position="168">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1226,11 +1222,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/genetic/SimpleDemoGA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="161" column="16" selection-start-line="161" selection-start-column="16" selection-end-line="161" selection-end-column="16" />
+        <state relative-caret-position="244">
+          <caret line="148" column="22" selection-start-line="148" selection-start-column="22" selection-end-line="148" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
         </state>
       </provider>
     </entry>
