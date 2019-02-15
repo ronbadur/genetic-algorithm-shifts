@@ -8,7 +8,7 @@ import genetic.entities.Population;
 import java.util.Random;
 
 import static genetic.entities.GenAlgoUtilities.*;
-import static genetic.entities.ConstraintEnum.*;
+import static common.ConstraintEnum.*;
 
 
 /**

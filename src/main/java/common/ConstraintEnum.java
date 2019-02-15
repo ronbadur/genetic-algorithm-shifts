@@ -1,4 +1,4 @@
-package genetic.entities;
+package common;
 
 public enum ConstraintEnum {
     Available(1000),
