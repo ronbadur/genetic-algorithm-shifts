@@ -1,5 +1,6 @@
 package genetic.entities;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,5 +76,23 @@ public class Population {
             individual.print();
             System.out.println("fitness: " + individual.fitness);
         });
+    }
+
+    public void printToFileWithFitness(int generationNum){
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("Generation-" + generationNum + ".txt"), "utf-8"))) {
+
+            individuals.forEach(individual -> {
+                try {
+                    writer.write(individual.getPrintableObject());
+                    writer.write("fitness: " + individual.fitness);
+                } catch (IOException e) {
+                    System.out.printf(e.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            System.out.printf(e.getMessage());
+        }
+
     }
 }

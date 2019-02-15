@@ -60,6 +60,7 @@ public class SimpleDemoGA {
 
         System.out.println("Generation: " + demo.generationCount + " Fittest: " + demo.population.getFittest().fitness);
 
+        demo.population.printToFileWithFitness(0);
         //While population gets an individual with maximum fitness
         while (demo.population.fittest < (Available.getValue() * GenAlgoUtilities.maxFitnessCanBe())) {
             ++demo.generationCount;
