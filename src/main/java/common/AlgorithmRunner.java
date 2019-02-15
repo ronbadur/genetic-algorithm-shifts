@@ -2,5 +2,5 @@ package common;
 
 public interface AlgorithmRunner {
 
-    int[][][] run(int[][][] constraints, int minNumberOfWorkersInShift);
+    int[][][] run(int[][][] constraints, int numberOfWorkersInShift);
 }
