@@ -14,10 +14,10 @@ public class Individual implements Comparable {
         genes = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
         rn = new Random();
 
-        //Set genes randomly for each individual
+        // Set genes randomly for each individual
         for (int day = 0; day < NUM_OF_DAYS; day++) {
             for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
-                // who of the workers will get the shift
+                // Who of the workers will get the shift
                 int worker;
                 for (int counter = 0; counter < WORKERS_IN_SINGLE_SHIFT; counter++) {
                     worker = rn.nextInt(NUM_OF_WORKERS);
@@ -98,6 +98,10 @@ public class Individual implements Comparable {
     }
 
     public boolean isValid() {
+        if (isDoubleShift()) {
+            return false;
+        }
+
         //Set genes randomly for each individual
         for (int day = 0; day < genes[0].length; day++) {
             for (int shift = 0; shift < genes[0][day].length; shift++) {
@@ -116,6 +120,29 @@ public class Individual implements Comparable {
         }
 
         return true;
+    }
+
+    private boolean isDoubleShift() {
+        // (Used in the loop) Represent if the worker did work it the shift before
+        boolean isWorkingThePrevShift = false;
+
+        for (int worker = 0; worker < genes.length; worker++) {
+            for (int day = 0; day < genes[0].length; day++) {
+                for (int shift = 0; shift < genes[0][day].length; shift++) {
+                    if (genes[worker][day][shift] == 1) {
+                        // We don't want the worker to work 2 shifts one after the other
+                        if (isWorkingThePrevShift) {
+                            return true;
+                        } else {
+                            isWorkingThePrevShift = true;
+                        }
+                    } else {
+                        isWorkingThePrevShift = false;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override
