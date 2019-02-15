@@ -80,12 +80,12 @@ public class Population {
 
     public void printToFileWithFitness(int generationNum){
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("Generation-" + generationNum + ".txt"), "utf-8"))) {
+                new FileOutputStream("GenerationFiles/Generation-" + generationNum + ".txt"), "utf-8"))) {
 
             individuals.forEach(individual -> {
                 try {
-                    writer.write(individual.getPrintableObject());
-                    writer.write("fitness: " + individual.fitness);
+                    writer.write(individual.getPrintableObject() + "\n");
+                    writer.write("fitness: " + individual.fitness + "\n");
                 } catch (IOException e) {
                     System.out.printf(e.getMessage());
                 }
