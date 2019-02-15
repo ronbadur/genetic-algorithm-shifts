@@ -86,10 +86,6 @@ public class IntelligentAlgorithm {
 					}
 				}
 
-				System.out.println("Day: " + (j + 1) + " Shift: " + (k + 1));
-				System.out.println(Arrays.toString(visited));
-				System.out.println("---");
-
 				this.makeNextShiftsImpossible(visited, k, j, valueWeightShifts);
 			}
 		}
@@ -135,6 +131,7 @@ public class IntelligentAlgorithm {
 
 	private void makeNextShiftsImpossible(int[] visited, int currentShift, int day, KnapsackItem[][][] valueWeightShifts) {
 		int nextShift = (currentShift + 1) % this.numberOfShifts;
+
 		if (nextShift == 0 && day < this.numberOfDays - 1) {
 			day++;
 		}
