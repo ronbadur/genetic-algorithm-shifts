@@ -1,66 +1,79 @@
 package genetic.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Population {
 
-    int popSize = 10;
-    Individual[] individuals = new Individual[10];
-    int fittest = 0;
+    public List<Individual> individuals;
+
+    // Before checking this values, you need to run calculateFitness
+    public int fittest = 0;
+    public int populationTotalFitness = 0;
+
+    public Population() {
+        individuals = new ArrayList<>();
+    }
 
     //Initialize population
-    public void initializePopulation() {
-        for (int i = 0; i < individuals.length; i++) {
-            individuals[i] = new Individual();
+    public void initializePopulation(int size) {
+        for (int i = 0; i < size; i++) {
+            individuals.add(new Individual());
         }
+    }
+
+    public void add(Population population) {
+        individuals.addAll(population.individuals);
+    }
+
+    public void add(Individual individual) {
+        individuals.add(individual);
     }
 
     //Get the fittest individual
     public Individual getFittest() {
         int maxFit = Integer.MIN_VALUE;
-        int maxFitIndex = 0;
-        for (int i = 0; i < individuals.length; i++) {
-            if (maxFit <= individuals[i].fitness) {
-                maxFit = individuals[i].fitness;
-                maxFitIndex = i;
-            }
-        }
-        fittest = individuals[maxFitIndex].fitness;
-        return individuals[maxFitIndex];
-    }
+        Individual maxFitIndividual = individuals.get(0);
 
-    //Get the second most fittest individual
-    public Individual getSecondFittest() {
-        int maxFit1 = 0;
-        int maxFit2 = 0;
-        for (int i = 0; i < individuals.length; i++) {
-            if (individuals[i].fitness > individuals[maxFit1].fitness) {
-                maxFit2 = maxFit1;
-                maxFit1 = i;
-            } else if (individuals[i].fitness > individuals[maxFit2].fitness) {
-                maxFit2 = i;
+        for (Individual individual: individuals) {
+            if (maxFit <= individual.fitness) {
+                maxFit = individual.fitness;
+                maxFitIndividual = individual;
             }
         }
-        return individuals[maxFit2];
-    }
 
-    //Get index of least fittest individual
-    public int getLeastFittestIndex() {
-        int minFitVal = Integer.MAX_VALUE;
-        int minFitIndex = 0;
-        for (int i = 0; i < individuals.length; i++) {
-            if (minFitVal >= individuals[i].fitness) {
-                minFitVal = individuals[i].fitness;
-                minFitIndex = i;
-            }
-        }
-        return minFitIndex;
+        return maxFitIndividual;
     }
 
     //Calculate fitness of each individual
-    public void calculateFitness() {
+    public void calculateFitness(Constraint constraints) {
+        populationTotalFitness = 0;
 
-        for (int i = 0; i < individuals.length; i++) {
-            individuals[i].calcFitness();
+        for (Individual individual : individuals) {
+            individual.calcFitness(constraints);
+            populationTotalFitness += individual.fitness;
         }
-        getFittest();
+
+        fittest = getFittest().fitness;
+    }
+
+    public void clear() {
+        individuals.clear();
+        fittest = 0;
+    }
+
+    public void print(){
+        individuals.forEach(Individual::print);
+    }
+
+    public void sort() {
+        individuals.sort(Individual::compareTo);
+    }
+
+    public void printWithFitness(){
+        individuals.forEach(individual -> {
+            individual.print();
+            System.out.println("fitness: " + individual.fitness);
+        });
     }
 }
