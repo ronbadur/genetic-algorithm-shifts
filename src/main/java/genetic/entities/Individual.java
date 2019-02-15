@@ -31,7 +31,7 @@ public class Individual implements Comparable {
 
     public String getPrintableObject(){
         StringBuilder result = new StringBuilder();
-        result.append("------------------");
+        result.append("------------------\n");
         result.append(getPrintableMatrix(genes));
 
         return result.toString();
@@ -50,9 +50,9 @@ public class Individual implements Comparable {
             for(int shift = 0; shift < matrix[worker][0].length; shift++) {
                 result.append("shift " + shift + "|");
             }
-            System.out.println();
+            result.append("\n");
             for (int day = 0; day < matrix[worker].length; day++) {
-                result.append("day " + day +";");
+                result.append("day " + day + ";");
                 for(int shift = 0; shift < matrix[worker][day].length; shift++) {
                     result.append("    " + matrix[worker][day][shift]);
                     result.append("    ");
