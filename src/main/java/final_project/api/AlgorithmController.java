@@ -14,10 +14,9 @@ import java.util.Random;
 public class AlgorithmController {
 	private AlgorithmComparison algorithmComparison = new AlgorithmComparison();
 
-
 	@RequestMapping("/runStatistics")
 	public List<ComparisonResult> runStatistics(@RequestParam("numberOfWorkers") int numberOfWorkers) {
-		List<ComparisonResult> comparisonResultsList = new ArrayList<ComparisonResult>();
+		List<ComparisonResult> comparisonResultsList = new ArrayList<>();
 
 		for (int i = 0; i < numberOfWorkers; i++) {
 			ComparisonResult comparisonResult = algorithmComparison.compare(generateRandomShiftRequests(8, 5, 3), numberOfWorkers);

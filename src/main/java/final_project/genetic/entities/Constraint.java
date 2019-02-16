@@ -2,7 +2,6 @@ package final_project.genetic.entities;
 
 import java.util.Random;
 
-import static final_project.genetic.entities.GenAlgoUtilities.*;
 import static final_project.genetic.entities.Individual.printMatrix;
 
 public class Constraint {

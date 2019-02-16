@@ -1,17 +1,17 @@
 package final_project.common;
 
 public class AlgorithmComparison {
-	private AlgorithmRunner dynamicAlgorithm = new DynamicAlgorithm();
-	private AlgorithmRunner geneticAlgorithm = new GeneticAlgorithm();
+	private AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
+	private AlgorithmRunner geneticAlgorithmRunner = new GeneticAlgorithmRunner();
 	private AlgorithmScorer algorithmScorer = new AlgorithmScorer();
 
 	public ComparisonResult compare(int[][][] constraints, int numberOfWorkersInShift) {
 		long startingDynamic = System.currentTimeMillis();
-		int[][][] dynamicSolution = dynamicAlgorithm.run(constraints, numberOfWorkersInShift);
+		int[][][] dynamicSolution = dynamicAlgorithmRunner.run(constraints, numberOfWorkersInShift);
 		long endDynamic = System.currentTimeMillis();
 
 		long startingGenetic = System.currentTimeMillis();
-		int[][][] geneticSolution = geneticAlgorithm.run(constraints, numberOfWorkersInShift);
+		int[][][] geneticSolution = geneticAlgorithmRunner.run(constraints, numberOfWorkersInShift);
 		long endGenetic = System.currentTimeMillis();
 
 		double dynamicScore = algorithmScorer.score(constraints, dynamicSolution);

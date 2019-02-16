@@ -1,15 +1,12 @@
-import final_project.common.AlgorithmRunner;
+package final_project.common;
 
-public class GeneticAlgorithm implements AlgorithmRunner {
+import final_project.genetic.algorithm.GeneticAlgorithm;
 
+public class GeneticAlgorithmRunner implements AlgorithmRunner {
 	@Override
 	public int[][][] run(int[][][] constraints, int numberOfWorkersInShift) {
-		Random rn = new Random();
-		Constraint algorithmConstraints = new Constraint(constraints);
-		Population population = new Population();
-		Population newPopulation = new Population();
-		int generationCount = 0;
+		GeneticAlgorithm genAlgo = new GeneticAlgorithm(constraints, numberOfWorkersInShift);
 
-		return new int[0][][];
+		return genAlgo.scheduleShifts();
 	}
 }

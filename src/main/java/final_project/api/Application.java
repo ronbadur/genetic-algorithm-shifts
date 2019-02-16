@@ -1,10 +1,13 @@
 package final_project.api;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackageClasses = AlgorithmController.class)
 public class Application {
 	public static void main(String[] args) {
-		org.springframework.boot.SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }
