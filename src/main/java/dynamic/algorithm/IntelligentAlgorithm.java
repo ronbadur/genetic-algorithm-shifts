@@ -28,8 +28,6 @@ public class IntelligentAlgorithm implements Algorithm {
 	}
 
 	public int[][][] scheduleShifts() {
-		this.print3dMatrix(this.shiftRequests);
-
 		KnapsackItem[][][] valueWeightShifts = this.requestsToValueWeightMapper(this.shiftRequests);
 
 		return this.resolveManning(valueWeightShifts);
@@ -71,7 +69,6 @@ public class IntelligentAlgorithm implements Algorithm {
 
 				while (workersInShift != this.necessaryWorkers) {
 					if (workersInShift > this.necessaryWorkers) {
-						System.out.println("Too much");
 						this.removeUnnecessaryWorkers(input, visited, workersInShift);
 
 						workersInShift = Arrays.stream(visited).sum();
