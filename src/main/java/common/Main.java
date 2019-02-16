@@ -1,21 +1,17 @@
-package dynamic;
-
-import dynamic.algorithm.IntelligentAlgorithm;
+package common;
 
 import java.util.Random;
 
 public class Main {
+	private static AlgorithmComparison algorithmComparison = new AlgorithmComparison();
+
 	public static void main(String[] args) {
-		int numOfWorkersPerShift = 2;
-		int numOfWorkers = 4;
+		for (int i = 0; i < 5; i++) {
+			ComparisonResult comparisonResult = algorithmComparison.compare(generateRandomShiftRequests(8, 5, 3), 3);
 
-		if (numOfWorkers / 2 < numOfWorkersPerShift) {
-			throw new RuntimeException("It won't work");
+			System.out.println("Result of round: " + (i + 1));
+			System.out.println(comparisonResult.toString());
 		}
-
-		IntelligentAlgorithm ia = new IntelligentAlgorithm(generateRandomShiftRequests(numOfWorkers, 7, 4), numOfWorkersPerShift);
-
-		ia.scheduleShifts();
 	}
 
 	private static int[][][] generateRandomShiftRequests(int workers, int days, int shifts) {
