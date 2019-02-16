@@ -6,20 +6,30 @@ import java.util.List;
 
 public class Population {
 
+    private int numberOfWorkers;
+    private int numberOfDays;
+    private int numberOfShifts;
+    private int necessaryWorkers;
+
     public List<Individual> individuals;
 
     // Before checking this values, you need to run calculateFitness
     public int fittest = 0;
     public int populationTotalFitness = 0;
 
-    public Population() {
+
+    public Population(int numberOfWorkers, int numberOfDays, int numberOfShifts, int necessaryWorkers) {
+        this.numberOfWorkers = numberOfWorkers;
+        this.numberOfDays = numberOfDays;
+        this.numberOfShifts = numberOfShifts;
+        this.necessaryWorkers = necessaryWorkers;
         individuals = new ArrayList<>();
     }
 
     //Initialize population
     public void initializePopulation(int size) {
         for (int i = 0; i < size; i++) {
-            individuals.add(new Individual());
+            individuals.add(new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers));
         }
     }
 

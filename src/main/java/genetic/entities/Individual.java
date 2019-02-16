@@ -3,28 +3,69 @@ package genetic.entities;
 import java.util.Random;
 
 public class Individual implements Comparable {
+    private int necessaryWorkers;
+    private int numberOfWorkers;
+    private int numberOfDays;
+    private int numberOfShifts;
 
     public int fitness;
     public int[][][] genes;
     Random rn;
 
-    public Individual() {
-        genes = new int[GenAlgoUtilities.NUM_OF_WORKERS][GenAlgoUtilities.NUM_OF_DAYS][GenAlgoUtilities.NUM_OF_SHIFTS];
+    public Individual(int numberOfWorkers, int numberOfDays, int numberOfShifts, int necessaryWorkers) {
+        this.numberOfWorkers = numberOfWorkers;
+        this.numberOfDays= numberOfDays;
+        this.numberOfShifts = numberOfShifts;
+        this.necessaryWorkers = necessaryWorkers;
+
+        genes = new int[numberOfWorkers][numberOfDays][numberOfShifts];
         rn = new Random();
 
         // Set genes randomly for each individual
-        for (int day = 0; day < GenAlgoUtilities.NUM_OF_DAYS; day++) {
-            for (int shift = 0; shift < GenAlgoUtilities.NUM_OF_SHIFTS; shift++) {
+        for (int day = 0; day < numberOfDays; day++) {
+            for (int shift = 0; shift < numberOfShifts; shift++) {
                 // Who of the workers will get the shift
-                int worker;
-                for (int counter = 0; counter < GenAlgoUtilities.WORKERS_IN_SINGLE_SHIFT; counter++) {
-                    worker = rn.nextInt(GenAlgoUtilities.NUM_OF_WORKERS);
-                    genes[worker][day][shift] = 1;
+                int workerRandIndex;
+                int[] workers = new int[numberOfWorkers];
+                int counter = 0;
+                // TODO: int tries =  numberOfWorkers * 2;
+                while (counter < necessaryWorkers) {
+                    workerRandIndex = rn.nextInt(numberOfWorkers);
+
+                    // Just if the worker not working the shift before, assign him to the shift
+                    if (isWorkingShiftBefore(workerRandIndex, day, shift)) {
+                        continue;
+                    } else {
+                        workers[workerRandIndex] = 1;
+                        counter++;
+                    }
+                }
+
+                // Insert the workers
+                for (int worker = 0; worker < numberOfWorkers; worker++) {
+                    genes[worker][day][shift] = workers[worker];
                 }
             }
         }
 
         fitness = 0;
+    }
+
+    private boolean isWorkingShiftBefore(int workerIndex, int day, int shift) {
+        boolean result;
+
+        if ((day == 0) && (shift == 0)) {
+            // It's the first shift
+            result = false;
+        } else if (shift == 0) {
+            // If shift is zero go to the last shift in prev day
+            result = genes[workerIndex][day - 1][numberOfShifts - 1] == 1;
+        } else {
+            // look at the value of prev shift
+            result = genes[workerIndex][day][shift - 1] == 1;
+        }
+
+        return result;
     }
 
     public String getPrintableObject(){
@@ -88,7 +129,7 @@ public class Individual implements Comparable {
             for (int worker = 0; worker < genes.length; worker++) {
                 for (int day = 0; day < genes[worker].length; day++) {
                     for (int shift = 0; shift < genes[worker][day].length; shift++) {
-                        fitness += constraints.constraints[worker][day][shift] * genes[worker][day][shift];
+                        fitness += constraints.getConstraints()[worker][day][shift] * genes[worker][day][shift];
                     }
                 }
             }
@@ -98,33 +139,41 @@ public class Individual implements Comparable {
     public boolean isValid() {
         if (isDoubleShift()) {
             return false;
+        } else {
+            return true;
         }
 
-        //Set genes randomly for each individual
-        for (int day = 0; day < genes[0].length; day++) {
-            for (int shift = 0; shift < genes[0][day].length; shift++) {
-                int numOfWorkersInShift = 0;
-
-                for (int worker = 0; worker < genes.length; worker++) {
-                    if (genes[worker][day][shift] == 1) {
-                        numOfWorkersInShift++;
-                    }
-                }
-
-                if (numOfWorkersInShift != GenAlgoUtilities.WORKERS_IN_SINGLE_SHIFT) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+//        //Set genes randomly for each individual
+//        for (int day = 0; day < genes[0].length; day++) {
+//            for (int shift = 0; shift < genes[0][day].length; shift++) {
+//                int numOfWorkersInShift = 0;
+//
+//                for (int worker = 0; worker < genes.length; worker++) {
+//                    if (genes[worker][day][shift] == 1) {
+//                        numOfWorkersInShift++;
+//                    }
+//                }
+//
+//                if (numOfWorkersInShift != necessaryWorkers) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
     }
 
+    /**
+     * We don't want the worker to work 2 shifts one after the other
+     * @return true if there is a double shifting in this Individual. else otherwise
+     */
     private boolean isDoubleShift() {
         // (Used in the loop) Represent if the worker did work it the shift before
         boolean isWorkingThePrevShift = false;
 
         for (int worker = 0; worker < genes.length; worker++) {
+            // initialize for the new worker
+            isWorkingThePrevShift = false;
             for (int day = 0; day < genes[0].length; day++) {
                 for (int shift = 0; shift < genes[0][day].length; shift++) {
                     if (genes[worker][day][shift] == 1) {
@@ -157,7 +206,7 @@ public class Individual implements Comparable {
 
     @Override
     public Individual clone() {
-        Individual a = new Individual();
+        Individual a = new Individual(numberOfWorkers,  numberOfDays, numberOfShifts, necessaryWorkers);
         a.fitness = fitness;
 
         for (int worker = 0; worker < genes.length; worker++) {
