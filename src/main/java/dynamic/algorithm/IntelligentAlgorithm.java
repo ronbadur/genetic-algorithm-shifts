@@ -1,10 +1,11 @@
 package dynamic.algorithm;
 
+import common.Algorithm;
 import dynamic.entities.Knapsack.KnapsackItem;
 
 import java.util.Arrays;
 
-public class IntelligentAlgorithm {
+public class IntelligentAlgorithm implements Algorithm {
 	private final int HEAVY_CONSTRAINT = 1;
 	private final int MEDIUM_CONSTRAINT = 10;
 	private final int LIGHT_CONSTRAINT = 100;
