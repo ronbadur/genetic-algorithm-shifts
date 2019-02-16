@@ -1,8 +1,8 @@
 package common;
 
 public class AlgorithmComparison {
-	private AlgorithmRunner dynamicAlgorithm = new DynamicAlgorithm();
-	private AlgorithmRunner geneticAlgorithm = new GeneticAlgorithm();
+	private AlgorithmRunner dynamicAlgorithm = new DynamicAlgorithmRunner();
+	private AlgorithmRunner geneticAlgorithm = new GeneticAlgorithmRunner();
 	private AlgorithmScorer algorithmScorer = new AlgorithmScorer();
 
 	public ComparisonResult compare(int[][][] constraints, int numberOfWorkersInShift) {
