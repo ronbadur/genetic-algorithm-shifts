@@ -4,11 +4,11 @@ import genetic.entities.Constraint;
 import genetic.entities.GenAlgoUtilities;
 import genetic.entities.Individual;
 import genetic.entities.Population;
+import common.ConstraintEnum;
 
 import java.util.Random;
 
 import static genetic.entities.GenAlgoUtilities.*;
-import static common.ConstraintEnum.*;
 
 
 /**
@@ -27,20 +27,20 @@ public class SimpleDemoGA {
         int populationSize = 50;
         int[][][] manualConstraints = {
                 {
-                        {Available.getValue(), Available.getValue(), NotAvailable.getValue()},
-                        {NotAvailable.getValue(), Available.getValue(), Available.getValue()}
+                        {ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue()},
+                        {ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
                 },
                 {
-                        {Available.getValue(), NotAvailable.getValue(), NotAvailable.getValue()},
-                        {Available.getValue(), Available.getValue(), NotAvailable.getValue()}
+                        {ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.NotAvailable.getValue()},
+                        {ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue()}
                 },
                 {
-                        {NotAvailable.getValue(), Available.getValue(), Available.getValue()},
-                        {NotAvailable.getValue(), NotAvailable.getValue(), NotAvailable.getValue()}
+                        {ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+                        {ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.NotAvailable.getValue()}
                 },
                 {
-                        {NotAvailable.getValue(), NotAvailable.getValue(), Available.getValue()},
-                        {Available.getValue(), NotAvailable.getValue(), Available.getValue()}
+                        {ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()},
+                        {ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()}
                 }
         };
 
@@ -62,7 +62,7 @@ public class SimpleDemoGA {
 
         demo.population.printToFileWithFitness(0);
         //While population gets an individual with maximum fitness
-        while (demo.population.fittest < (Available.getValue() * GenAlgoUtilities.maxFitnessCanBe())) {
+        while (demo.population.fittest < (ConstraintEnum.Available.getValue() * GenAlgoUtilities.maxFitnessCanBe())) {
             ++demo.generationCount;
 
             //Do crossover

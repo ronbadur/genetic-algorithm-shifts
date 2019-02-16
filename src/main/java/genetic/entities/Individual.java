@@ -2,8 +2,6 @@ package genetic.entities;
 
 import java.util.Random;
 
-import static genetic.entities.GenAlgoUtilities.*;
-
 public class Individual implements Comparable {
 
     public int fitness;
@@ -11,16 +9,16 @@ public class Individual implements Comparable {
     Random rn;
 
     public Individual() {
-        genes = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
+        genes = new int[GenAlgoUtilities.NUM_OF_WORKERS][GenAlgoUtilities.NUM_OF_DAYS][GenAlgoUtilities.NUM_OF_SHIFTS];
         rn = new Random();
 
         // Set genes randomly for each individual
-        for (int day = 0; day < NUM_OF_DAYS; day++) {
-            for (int shift = 0; shift < NUM_OF_SHIFTS; shift++) {
+        for (int day = 0; day < GenAlgoUtilities.NUM_OF_DAYS; day++) {
+            for (int shift = 0; shift < GenAlgoUtilities.NUM_OF_SHIFTS; shift++) {
                 // Who of the workers will get the shift
                 int worker;
-                for (int counter = 0; counter < WORKERS_IN_SINGLE_SHIFT; counter++) {
-                    worker = rn.nextInt(NUM_OF_WORKERS);
+                for (int counter = 0; counter < GenAlgoUtilities.WORKERS_IN_SINGLE_SHIFT; counter++) {
+                    worker = rn.nextInt(GenAlgoUtilities.NUM_OF_WORKERS);
                     genes[worker][day][shift] = 1;
                 }
             }
@@ -113,7 +111,7 @@ public class Individual implements Comparable {
                     }
                 }
 
-                if (numOfWorkersInShift != WORKERS_IN_SINGLE_SHIFT) {
+                if (numOfWorkersInShift != GenAlgoUtilities.WORKERS_IN_SINGLE_SHIFT) {
                     return false;
                 }
             }

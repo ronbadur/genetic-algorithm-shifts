@@ -1,6 +1,5 @@
 package dynamic;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import dynamic.algorithm.IntelligentAlgorithm;
 
 import java.util.Random;
