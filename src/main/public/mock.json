@@ -1,0 +1,26 @@
+[
+  {
+    "dynamicScore": 100.0,
+    "dynamicDuration": 10.0,
+    "geneticScore": 110.0,
+    "geneticDuration": 3033.0
+  },
+  {
+    "dynamicScore": 82.0,
+    "dynamicDuration": 1.0,
+    "geneticScore": 83.0,
+    "geneticDuration": 3003.0
+  },
+  {
+    "dynamicScore": 85.0,
+    "dynamicDuration": 1.0,
+    "geneticScore": 83.0,
+    "geneticDuration": 3002.0
+  },
+  {
+    "dynamicScore": 86.0,
+    "dynamicDuration": 1.0,
+    "geneticScore": 87.0,
+    "geneticDuration": 3003.0
+  }
+]
