@@ -32,15 +32,17 @@ public class AlgorithmScorer {
 		for (int[][] worker : solution) {
 			for (int j = 0; j < numberOfDays; j++) {
 				for (int k = 0; k < numberOfShifts; k++) {
-					int nextShift = (k + 1) % numberOfShifts;
-					int nextDayShift = j;
+					if (!(j == numberOfDays - 1 && k == numberOfShifts - 1)) {
+						int nextShift = (k + 1) % numberOfShifts;
+						int nextDayShift = j;
 
-					if (nextShift == 0 && j < numberOfDays - 1) {
-						nextDayShift++;
-					}
+						if (nextShift == 0 && j < numberOfDays - 1) {
+							nextDayShift++;
+						}
 
-					if (worker[nextDayShift][nextShift] == 1 && worker[j][k] == 1) {
-						return false;
+						if (worker[nextDayShift][nextShift] == 1 && worker[j][k] == 1) {
+							return false;
+						}
 					}
 				}
 			}

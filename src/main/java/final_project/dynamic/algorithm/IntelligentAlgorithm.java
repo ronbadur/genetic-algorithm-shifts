@@ -84,6 +84,10 @@ public class IntelligentAlgorithm implements Algorithm {
 					}
 				}
 
+				for (int i = 0; i < visited.length; i++) {
+					manning[i][j][k] = visited[i];
+				}
+
 				this.makeNextShiftsImpossible(visited, k, j, valueWeightShifts);
 			}
 		}

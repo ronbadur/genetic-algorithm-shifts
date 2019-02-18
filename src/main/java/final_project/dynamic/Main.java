@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class Main {
 	public static void main(String[] args) {
-		int numOfWorkersPerShift = 2;
-		int numOfWorkers = 4;
+		int numOfWorkersPerShift = 3;
+		int numOfWorkers = 8;
 
 		if (numOfWorkers / 2 < numOfWorkersPerShift) {
 			throw new RuntimeException("It won't work");
