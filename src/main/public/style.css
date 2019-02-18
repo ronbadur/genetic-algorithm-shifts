@@ -10,8 +10,14 @@ li {
 }
 
 /* GRAPHS */
-.line {
+.dynamic-line {
   fill: none;
   stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.genetic-line {
+  fill: none;
+  stroke: rebeccapurple;
   stroke-width: 2px;
 }
