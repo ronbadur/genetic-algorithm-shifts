@@ -2,12 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Algorithms Comparison</title>
+    <title>Algorithms Comparison Benchmark</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Algorithms Benchmark</h1>
-    <div id="graph"></div>
+    <header><h1>Algorithms Benchmark</h1></header>
+    <hr />
+
+    <nav>
+      <ul>
+        <li><a href="#workers-score">Workers / Score</a></li>
+        <li><a href="#workers-duration">Workers / Duration</a></li>
+      </ul>
+    </nav>
+    <hr />
+    <section id="workers-score">
+      <h2>Workers / Score</h2>
+      <div id="graph"></div>
+    </section>
+    <section id="workers-duration">
+      <h2>Workers / Duration</h2>
+      <div id="graph"></div>
+    </section>
   </body>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="./index.js"></script>
