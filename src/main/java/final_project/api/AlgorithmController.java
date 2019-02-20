@@ -15,11 +15,16 @@ public class AlgorithmController {
 	private AlgorithmComparison algorithmComparison = new AlgorithmComparison();
 
 	@RequestMapping("/runStatistics")
-	public List<ComparisonResult> runStatistics(@RequestParam("numberOfWorkers") int numberOfWorkers) {
+	public List<ComparisonResult> runStatistics(
+			@RequestParam("workers") int workers,
+			@RequestParam("days") int days,
+			@RequestParam("shifts") int shifts,
+			@RequestParam("necessaryWorkers") int necessaryWorkers
+	) {
 		List<ComparisonResult> comparisonResultsList = new ArrayList<>();
 
-		for (int i = 0; i < numberOfWorkers; i++) {
-			ComparisonResult comparisonResult = algorithmComparison.compare(generateRandomShiftRequests(8, 5, 3), numberOfWorkers);
+		for (int i = 0; i < necessaryWorkers && i <= workers / 2; i++) {
+			ComparisonResult comparisonResult = algorithmComparison.compare(generateRandomShiftRequests(workers, days, shifts), necessaryWorkers);
 			comparisonResultsList.add(comparisonResult);
 		}
 
