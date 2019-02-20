@@ -1,0 +1,23 @@
+/* PAGE */
+html {
+  scroll-behavior: smooth;
+}
+
+li {
+  display: inline;
+  list-style: none;
+  padding: 1em;
+}
+
+/* GRAPHS */
+.dynamic-line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.genetic-line {
+  fill: none;
+  stroke: rebeccapurple;
+  stroke-width: 2px;
+}
