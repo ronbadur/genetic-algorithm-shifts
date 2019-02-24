@@ -1,45 +1,46 @@
-const numberOfWorkers = 4;
-const requestURL = `http://localhost:8080/runStatistics?numberOfWorkers=${numberOfWorkers}`;
-const mockFile = "mock.json";
+const workers = 30;
+const days = 5;
+const shifts = 3;
+const necessaryWorkers = 9;
+const requestURL = `http://localhost:8080/runStatistics?workers=${workers}&days=${days}&shifts=${shifts}&necessaryWorkers=${necessaryWorkers}`;
 
-// Uncomment once our backend allow CORS
-// d3.json(requestURL, (response, error) => {
-//   if (error) throw error;
+ d3.json(requestURL, (error, data) => {
+   if (error) throw error;
 
-//   const workersScoreData = data.map((element, index) => ({
-//     workers: index + 1,
-//     dynamic: element.dynamicScore,
-//     genetic: element.geneticScore
-//   }));
+   const workersScoreData = data.map((element, index) => ({
+     workers: index + 1,
+     dynamic: element.dynamicScore,
+     genetic: element.geneticScore
+   }));
 
-//   const workersDurationData = data.map((element, index) => ({
-//     workers: index + 1,
-//     dynamic: element.dynamicDuration,
-//     genetic: element.geneticDuration
-//   }));
+   const workersDurationData = data.map((element, index) => ({
+     workers: index + 1,
+     dynamic: element.dynamicDuration,
+     genetic: element.geneticDuration
+   }));
 
-//   drawWorkersScoreGraph(workersScoreData);
-//   drawWorkersDurationGraph(workersDurationData);
-// });
+   drawGraph(workersScoreData, "#workers-score");
+   drawGraph(workersDurationData, "#workers-duration");
+ });
 
-d3.json(mockFile, (error, data) => {
-  if (error) throw error;
-
-  const workersScoreData = data.map((element, index) => ({
-    workers: index + 1,
-    dynamic: element.dynamicScore,
-    genetic: element.geneticScore
-  }));
-
-  const workersDurationData = data.map((element, index) => ({
-    workers: index + 1,
-    dynamic: element.dynamicDuration,
-    genetic: element.geneticDuration
-  }));
-
-  drawGraph(workersScoreData, "#workers-score");
-  drawGraph(workersDurationData, "#workers-duration");
-});
+//d3.xhr('http://localhost:8080/runStatistics?workers=30&days=5&shifts=3&necessaryWorkers=9', (error, data) => {
+//  if (error) throw error;
+//
+//  const workersScoreData = data.map((element, index) => ({
+//    workers: index + 1,
+//    dynamic: element.dynamicScore,
+//    genetic: element.geneticScore
+//  }));
+//
+//  const workersDurationData = data.map((element, index) => ({
+//    workers: index + 1,
+//    dynamic: element.dynamicDuration,
+//    genetic: element.geneticDuration
+//  }));
+//
+//  drawGraph(workersScoreData, "#workers-score");
+//  drawGraph(workersDurationData, "#workers-duration");
+//});
 
 function drawGraph(data, selector) {
   // format the data
