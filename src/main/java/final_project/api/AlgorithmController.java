@@ -2,6 +2,7 @@ package final_project.api;
 
 import final_project.common.AlgorithmComparison;
 import final_project.common.ComparisonResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.util.Random;
 public class AlgorithmController {
 	private AlgorithmComparison algorithmComparison = new AlgorithmComparison();
 
+	@CrossOrigin(origins = "http://localhost:63342")
 	@RequestMapping("/runStatistics")
 	public List<ComparisonResult> runStatistics(
 			@RequestParam("workers") int workers,
