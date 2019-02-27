@@ -6,6 +6,7 @@ import final_project.genetic.entities.Constraint;
 import final_project.genetic.entities.Individual;
 import final_project.genetic.entities.Population;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -110,22 +111,22 @@ public class GeneticAlgorithm implements Algorithm {
     }
 
     // Randomize
-    private Individual[] createNewRandomize(int count) {
-        Individual[] result = new Individual[count];
+    private ArrayList<Individual> createNewRandomize(int count) {
+        ArrayList<Individual> result = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            result[i] = new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers);
+            result.add(new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers));
         }
-        if (result[0] == null) {
+        if (result == null) {
             System.out.println("randomize wrong");
         }
         return result;
     }
 
     // Crossover
-    private Individual[] crossover(int count) {
+    private ArrayList<Individual> crossover(int count) {
         Random rn = new Random();
-        Individual[] result = new Individual[count - 1];
+        ArrayList<Individual> result = new ArrayList<>();
         Individual first, second;
         for (int i = 0; i < count - 1; i++) {
             Iterator<Individual> a = population.individuals.iterator();
@@ -156,7 +157,7 @@ public class GeneticAlgorithm implements Algorithm {
                         second.genes[worker][day][shift];
                 second.genes[worker][day][shift] = temp;
             }
-            result[i] = first;
+            result.add(first);
         }
 
         if (result == null) {
@@ -166,11 +167,11 @@ public class GeneticAlgorithm implements Algorithm {
     }
 
     //Mutation
-    private Individual[] mutation(int count) {
+    private ArrayList<Individual> mutation(int count) {
         Random rn = new Random();
 
         Individual first;
-        Individual[] result = new Individual[count - 1];
+        ArrayList<Individual> result = new ArrayList<>();
 
         for (int i = 0; i < count - 1; i++) {
             Iterator<Individual> individualIterator = population.individuals.iterator();
@@ -194,9 +195,9 @@ public class GeneticAlgorithm implements Algorithm {
                 first.genes[worker][day][shift] = rn.nextInt(1);
             }
 
-            result[i] = first;
+            result.add(first);
         }
-        if (result[0] == null) {
+        if (result == null) {
             System.out.println("mutation wrong");
         }
         return result;
@@ -204,7 +205,7 @@ public class GeneticAlgorithm implements Algorithm {
 
     private final boolean isPopulationEqualToPrev(Population newPopulation){
         boolean result;
-return false;
+        return false;
 //        if (this.prevPopulation == null) {
 //            result = false;
 //        } else if (population.equals(prevPopulation)) {

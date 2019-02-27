@@ -3,6 +3,7 @@ package final_project.genetic.entities;
 import org.springframework.beans.BeanUtils;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -56,10 +57,9 @@ public class Population {
         individuals.add(individual);
     }
 
-    public void add(Individual[] individual) {
-        for (int i = 0; i < individual.length; i++) {
-            individuals.add(individual[i]);
-            System.out.println(i);
+    public void add(ArrayList<Individual> gotIndividuals) {
+        for (Individual currIndi: gotIndividuals) {
+            individuals.add(currIndi);
         }
     }
     //Get the fittest individual
