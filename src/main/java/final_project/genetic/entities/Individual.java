@@ -1,5 +1,6 @@
 package final_project.genetic.entities;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Individual implements Comparable {
@@ -51,7 +52,7 @@ public class Individual implements Comparable {
         fitness = 0;
     }
 
-    private boolean isWorkingShiftBefore(int workerIndex, int day, int shift) {
+    private final boolean isWorkingShiftBefore(int workerIndex, int day, int shift) {
         boolean result;
 
         if ((day == 0) && (shift == 0)) {
@@ -129,20 +130,39 @@ public class Individual implements Comparable {
             for (int worker = 0; worker < genes.length; worker++) {
                 for (int day = 0; day < genes[worker].length; day++) {
                     for (int shift = 0; shift < genes[worker][day].length; shift++) {
-                        fitness += constraints.getConstraints()[worker][day][shift] * genes[worker][day][shift];
+                        int a = constraints.getConstraints()[worker][day][shift];
+                        fitness += Math.log10(a) *
+                                genes[worker][day][shift];
                     }
                 }
             }
         }
     }
 
-    public boolean isValid() {
-        if (isDoubleShift()) {
+    private final boolean isAllShitOccupied() {
+
+        for (int day = 0; day < genes[0].length; day++) {
+            for (int shift = 0; shift < genes[0][day].length; shift++) {
+                int workersInShift = 0;
+                for (int worker = 0; worker < genes.length; worker++) {
+                    workersInShift += genes[worker][day][shift];
+                }
+                if (workersInShift != this.necessaryWorkers) {
+                    return false;
+                }
+            }
+
+        }
+
+        return true;
+    }
+
+    private final boolean isValid() {
+        if (isDoubleShift() || !isAllShitOccupied()) {
             return false;
         } else {
             return true;
         }
-
 //        //Set genes randomly for each individual
 //        for (int day = 0; day < genes[0].length; day++) {
 //            for (int shift = 0; shift < genes[0][day].length; shift++) {
@@ -167,9 +187,9 @@ public class Individual implements Comparable {
      * We don't want the worker to work 2 shifts one after the other
      * @return true if there is a double shifting in this Individual. else otherwise
      */
-    private boolean isDoubleShift() {
+    private final boolean isDoubleShift() {
         // (Used in the loop) Represent if the worker did work it the shift before
-        boolean isWorkingThePrevShift = false;
+        boolean isWorkingThePrevShift;
 
         for (int worker = 0; worker < genes.length; worker++) {
             // initialize for the new worker
@@ -202,6 +222,19 @@ public class Individual implements Comparable {
         } else {
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Individual that = (Individual) o;
+        return Arrays.equals(genes, that.genes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(genes);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package final_project.genetic.entities;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Population {
 
@@ -11,7 +11,7 @@ public class Population {
     private int numberOfShifts;
     private int necessaryWorkers;
 
-    public List<Individual> individuals;
+    public TreeSet<Individual> individuals;
 
     // Before checking this values, you need to run calculateFitness
     public int fittest = 0;
@@ -23,7 +23,20 @@ public class Population {
         this.numberOfDays = numberOfDays;
         this.numberOfShifts = numberOfShifts;
         this.necessaryWorkers = necessaryWorkers;
-        individuals = new ArrayList<>();
+        individuals = new TreeSet<Individual>(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                Individual individual1 = (Individual)o1;
+                Individual individual2 = (Individual)o2;
+                if (individual1.fitness < individual2.fitness) {
+                    return 1;
+                } else if (Arrays.deepEquals(individual1.genes, individual2.genes)) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
     }
 
     //Initialize population
@@ -44,7 +57,7 @@ public class Population {
     //Get the fittest individual
     public Individual getFittest() {
         int maxFit = Integer.MIN_VALUE;
-        Individual maxFitIndividual = individuals.get(0);
+        Individual maxFitIndividual = individuals.iterator().next();
 
         for (Individual individual: individuals) {
             if (maxFit <= individual.fitness) {
@@ -77,8 +90,16 @@ public class Population {
         individuals.forEach(Individual::print);
     }
 
-    public void sort() {
-        individuals.sort(Individual::compareTo);
+    public TreeSet<Individual> getMostFit(int numOfElementsToPull) {
+        int counter = 0;
+        TreeSet result = new TreeSet();
+        for (Iterator<Individual> iter = individuals.iterator(); iter.hasNext() && counter <= numOfElementsToPull; ) {
+            Individual element = iter.next();
+
+            result.add(element);
+        }
+
+        return result;
     }
 
     public void printWithFitness(){
@@ -92,10 +113,12 @@ public class Population {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("GenerationFiles/Generation-" + generationNum + ".txt"), "utf-8"))) {
 
+            AtomicInteger index = new AtomicInteger();
             individuals.forEach(individual -> {
                 try {
+                  index.incrementAndGet();
                     writer.write(individual.getPrintableObject() + "\n");
-                    writer.write("fitness: " + individual.fitness + "\n");
+                    writer.write("index: " + (index.get()) + " fitness: " + individual.fitness + "\n\n");
                 } catch (IOException e) {
                     System.out.printf(e.getMessage());
                 }
