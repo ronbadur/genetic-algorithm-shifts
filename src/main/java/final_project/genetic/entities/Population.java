@@ -1,5 +1,7 @@
 package final_project.genetic.entities;
 
+import org.springframework.beans.BeanUtils;
+
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,20 +42,26 @@ public class Population {
     }
 
     //Initialize population
+    public void add(Population population) {
+        individuals.addAll(population.individuals);
+    }
+
     public void initializePopulation(int size) {
         for (int i = 0; i < size; i++) {
             individuals.add(new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers));
         }
     }
 
-    public void add(Population population) {
-        individuals.addAll(population.individuals);
-    }
-
     public void add(Individual individual) {
         individuals.add(individual);
     }
 
+    public void add(Individual[] individual) {
+        for (int i = 0; i < individual.length; i++) {
+            individuals.add(individual[i]);
+            System.out.println(i);
+        }
+    }
     //Get the fittest individual
     public Individual getFittest() {
         int maxFit = Integer.MIN_VALUE;
@@ -127,5 +135,30 @@ public class Population {
             System.out.printf(e.getMessage());
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Population that = (Population) o;
+        boolean result = individuals.containsAll(that.individuals) && that.individuals.containsAll(individuals);
+
+        return result;
+    }
+
+    @Override
+    public Object clone() {
+        Population clonedPopulation = new Population(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers);
+        for (Individual item : individuals) {
+            clonedPopulation.add(item.clone());
+        }
+        return clonedPopulation;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(individuals);
     }
 }

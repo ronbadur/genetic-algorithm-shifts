@@ -6,6 +6,8 @@ import final_project.genetic.entities.Constraint;
 import final_project.genetic.entities.Individual;
 import final_project.genetic.entities.Population;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -16,6 +18,7 @@ public class GeneticAlgorithm implements Algorithm {
     private long stopTime;
     private long runTimeInMili = 0;
 
+    private Population prevPopulation;
     private Population population;
     private Population newPopulation;
     private int generationCount;
@@ -51,7 +54,6 @@ public class GeneticAlgorithm implements Algorithm {
     @Override
     public int[][][] scheduleShifts() {
 
-
         population.initializePopulation(populationSize);
         population.calculateFitness(algorithmConstraints);
 
@@ -61,17 +63,18 @@ public class GeneticAlgorithm implements Algorithm {
         while ((!isPopulationEqualToPrev(population)) &&
                 (!isTimePassed(runTimeInMili)) &&
                 (!isMaxFitted(population.fittest))) {
+            this.prevPopulation = population;
 
             generationCount++;
 
             // Do crossover
-            crossover(Math.round(populationSize * 0.5f));
+            newPopulation.add(crossover(Math.round(populationSize * 0.5f)));
 
             // Do mutation
-            mutation(Math.round(populationSize * 0.4f));
+            newPopulation.add(mutation(Math.round(populationSize * 0.4f)));
 
             // Create new randomize
-            createNewRandomize(Math.round(populationSize * 0.1f));
+            newPopulation.add(createNewRandomize(Math.round(populationSize * 0.1f)));
 
             // Cut the half worst offsprings
             newPopulation.calculateFitness(algorithmConstraints);
@@ -107,30 +110,34 @@ public class GeneticAlgorithm implements Algorithm {
     }
 
     // Randomize
-    private void createNewRandomize(int count) {
-        newPopulation.initializePopulation(count);
+    private Individual[] createNewRandomize(int count) {
+        Individual[] result = new Individual[count];
 
         for (int i = 0; i < count; i++) {
-            newPopulation.add(new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers));
+            result[i] = new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers);
         }
+        if (result[0] == null) {
+            System.out.println("randomize wrong");
+        }
+        return result;
     }
 
     // Crossover
-    private void crossover(int count) {
+    private Individual[] crossover(int count) {
         Random rn = new Random();
-
+        Individual[] result = new Individual[count - 1];
         Individual first, second;
         for (int i = 0; i < count - 1; i++) {
             Iterator<Individual> a = population.individuals.iterator();
             if (a.hasNext()) {
                 first = a.next().clone();
             } else {
-                continue;
+                return result;
             }
             if (a.hasNext()) {
                 second = a.next().clone();
             } else {
-                continue;
+                return result;
             }
 
             // -1 is for including Zero
@@ -149,29 +156,30 @@ public class GeneticAlgorithm implements Algorithm {
                         second.genes[worker][day][shift];
                 second.genes[worker][day][shift] = temp;
             }
-
-            newPopulation.add(first);
-            newPopulation.add(second);
+            result[i] = first;
         }
+
+        if (result == null) {
+            System.out.println("crosover wrong");
+        }
+        return result;
     }
 
     //Mutation
-    private void mutation(int count) {
+    private Individual[] mutation(int count) {
         Random rn = new Random();
 
-        Individual first, second;
+        Individual first;
+        Individual[] result = new Individual[count - 1];
+
         for (int i = 0; i < count - 1; i++) {
-            Iterator<Individual> a = population.individuals.iterator();
-            if (a.hasNext()) {
-                first = a.next().clone();
+            Iterator<Individual> individualIterator = population.individuals.iterator();
+            if (individualIterator.hasNext()) {
+                first = individualIterator.next().clone();
             } else {
-                continue;
+                return result;
             }
-            if (a.hasNext()) {
-                second = a.next().clone();
-            } else {
-                continue;
-            }
+
             // -1 is for including Zero
             final int MAX_POINT = (numberOfWorkers * numberOfDays * numberOfShifts) - 1;
             int crossOverStartPoint = rn.nextInt(MAX_POINT);
@@ -185,21 +193,41 @@ public class GeneticAlgorithm implements Algorithm {
 
                 first.genes[worker][day][shift] = rn.nextInt(1);
             }
-            newPopulation.add(first);
-            newPopulation.add(second);
+
+            result[i] = first;
         }
+        if (result[0] == null) {
+            System.out.println("mutation wrong");
+        }
+        return result;
     }
 
     private final boolean isPopulationEqualToPrev(Population newPopulation){
-        // TODO: implement
-        return false;
+        boolean result;
+return false;
+//        if (this.prevPopulation == null) {
+//            result = false;
+//        } else if (population.equals(prevPopulation)) {
+//            result = true;
+//        } else {
+//            result = false;
+//        }
+//
+//        this.prevPopulation = (Population)newPopulation.clone();
+//
+//        if (result) System.out.println("The current population is equal to the prev !");
+//        return result;
     }
     private final boolean isTimePassed(long currentExecutionTime) {
-        return currentExecutionTime >= maxRunTimeInMili;
+        boolean result = currentExecutionTime >= maxRunTimeInMili;
+        if (result) System.out.println("The time reach to the limit !");
+
+        return result;
     }
     private final boolean isMaxFitted(int maxFitnessInPopulation) {
-        System.out.printf("max fittness can be is: " + maxFitnessCanBe());
-        return maxFitnessInPopulation >= maxFitnessCanBe();
+        boolean result = maxFitnessInPopulation >= maxFitnessCanBe();
+        if (result) System.out.println("The result is max Fitted !");
+        return result;
     }
     private final int maxFitnessCanBe() {
         return 3 * (numberOfDays * numberOfShifts * necessaryWorkers);
