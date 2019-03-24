@@ -1,7 +1,7 @@
 package final_project.api;
 
-import final_project.common.AlgorithmComparison;
-import final_project.common.ComparisonResult;
+import final_project.common.*;
+import jdk.nashorn.internal.objects.NativeJSON;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,12 +25,54 @@ public class AlgorithmController {
 	) {
 		List<ComparisonResult> comparisonResultsList = new ArrayList<>();
 
-		for (int i = 0; i < necessaryWorkers && i <= workers / 2; i++) {
+		for (int i = 1; i < necessaryWorkers && i <= workers / 2; i++) {
 			ComparisonResult comparisonResult = algorithmComparison.compare(generateRandomShiftRequests(workers, days, shifts), necessaryWorkers);
 			comparisonResultsList.add(comparisonResult);
 		}
 
 		return comparisonResultsList;
+	}
+
+	@CrossOrigin(origins = "http://localhost:63342")
+	@RequestMapping("/realData")
+	public AlgorithmsResults realData() {
+		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
+		AlgorithmRunner geneticAlgorithmRunner = new GeneticAlgorithmRunner();
+
+		int[][][] dynamicResult = dynamicAlgorithmRunner.run(RealData.getData(), 5);
+		int[][][] geneticResult = geneticAlgorithmRunner.run(RealData.getData(), 5);
+
+		AlgorithmsResults algorithmsResults = new AlgorithmsResults(dynamicResult, geneticResult);
+
+		return algorithmsResults;
+	}
+
+	@CrossOrigin(origins = "http://localhost:63342")
+	@RequestMapping("/genetic")
+	public double genetic(
+			// @RequestParam("workers") int workers,
+			// @RequestParam("days") int days,
+			// @RequestParam("shifts") int shifts,
+			// @RequestParam("necessaryWorkers") int necessaryWorkers,
+			@RequestParam("populationSize") int populationSize,
+			@RequestParam("crossoverRate") float crossoverRate,
+			@RequestParam("mutationRate") float mutationRate,
+			@RequestParam("randomizeRate") float randomizeRate
+	) {
+
+		GeneticAlgorithmRunner geneticAlgorithmRunner = new GeneticAlgorithmRunner();
+
+		int[][][] result = geneticAlgorithmRunner.run(
+				RealData.getData(),
+				5,
+				populationSize,
+				crossoverRate,
+				mutationRate,
+				randomizeRate);
+
+		AlgorithmScorer algorithmScorer = new AlgorithmScorer();
+
+		return algorithmScorer.score(RealData.getData(), result);
 	}
 
 	private int[][][] generateRandomShiftRequests(int workers, int days, int shifts) {

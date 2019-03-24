@@ -9,4 +9,20 @@ public class GeneticAlgorithmRunner implements AlgorithmRunner {
 
 		return genAlgo.scheduleShifts();
 	}
+
+	public int[][][] run(int[][][] constraints, int numberOfWorkersInShift,
+	                     int populationSize,
+	                     float crossoverRate,
+	                     float mutationRate,
+	                     float randomizeRate) {
+		GeneticAlgorithm genAlgo = new GeneticAlgorithm(
+				constraints,
+				numberOfWorkersInShift,
+				populationSize,
+				crossoverRate,
+				mutationRate,
+				randomizeRate);
+
+		return genAlgo.scheduleShifts();
+	}
 }
