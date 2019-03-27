@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Algorithm Comparison</title>
-    <script src="index.js"></script>
+    <title>Algorithm Comparison</title>	
     <link rel="stylesheet" href="main.css"/>
 </head>
 
@@ -29,7 +28,20 @@
 <div class="buttons-container">
     <label for="populationSize">population size input</label>
     <input type="text" id="populationSize">
-    <button>Run Algorithm</button>
+    <button id="run-algorithm">Run Algorithm</button>
 </div>
+
+<table id="results">
+	<thead>
+		<th>Run</th>
+		<th>Parameters</th>
+		<th>Score</th>
+	</thead>
+	<tbody>		
+	</tbody>
+</table>
+
 </body>
-</html>/
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="index.js"></script>
+</html>
