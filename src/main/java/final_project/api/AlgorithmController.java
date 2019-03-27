@@ -15,7 +15,7 @@ import java.util.Random;
 public class AlgorithmController {
 	private AlgorithmComparison algorithmComparison = new AlgorithmComparison();
 
-	@CrossOrigin(origins = "http://localhost:63342")
+	@CrossOrigin(origins = "http://localhost:63343")
 	@RequestMapping("/runStatistics")
 	public List<ComparisonResult> runStatistics(
 			@RequestParam("workers") int workers,
@@ -33,7 +33,7 @@ public class AlgorithmController {
 		return comparisonResultsList;
 	}
 
-	@CrossOrigin(origins = "http://localhost:63342")
+	@CrossOrigin(origins = "http://localhost:63343")
 	@RequestMapping("/realData")
 	public AlgorithmsResults realData() {
 		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
@@ -47,7 +47,7 @@ public class AlgorithmController {
 		return algorithmsResults;
 	}
 
-	@CrossOrigin(origins = "http://localhost:63342")
+	@CrossOrigin(origins = "http://localhost:63343")
 	@RequestMapping("/genetic")
 	public double genetic(
 			// @RequestParam("workers") int workers,
