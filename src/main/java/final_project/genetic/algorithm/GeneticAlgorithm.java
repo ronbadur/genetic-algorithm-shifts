@@ -70,6 +70,9 @@ public class GeneticAlgorithm implements Algorithm {
 		this.generationCount = 0;
 	}
 
+	public static void main(String[] args) {
+
+	}
 	@Override
 	public int[][][] scheduleShifts() {
 		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();

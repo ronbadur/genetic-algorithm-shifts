@@ -155,7 +155,7 @@ public class Individual implements Comparable {
         }
     }
 
-    private final boolean isAllShitOccupied() {
+    private final boolean isAllShiftOccupied() {
 
         for (int day = 0; day < genes[0].length; day++) {
             for (int shift = 0; shift < genes[0][day].length; shift++) {
@@ -174,7 +174,7 @@ public class Individual implements Comparable {
     }
 
     private final boolean isValid() {
-        if (isDoubleShift() || !isAllShitOccupied()) {
+        if (isDoubleShift() || !isAllShiftOccupied()) {
             return false;
         } else {
             return true;
