@@ -22,10 +22,10 @@ public class GeneticAlgorithm implements Algorithm {
 	private Population population;
 	private Population newPopulation;
 	private int generationCount;
-	private int populationSize = 50;
+	private int populationSize = 500;
 	private float crossoverRate = 0.5f;
 	private float mutationRate = 0.4f;
-	private float randomizeRate = 0.1f;
+	private float randomizeRate = 0.3f;
 
 	private int necessaryWorkers;
 	private int maxRunTimeInMili;
@@ -37,7 +37,7 @@ public class GeneticAlgorithm implements Algorithm {
 
 	public GeneticAlgorithm(int[][][] shiftRequests,
 	                        int necessaryWorkers) {
-		this(shiftRequests, necessaryWorkers, 5000);
+		this(shiftRequests, necessaryWorkers, 15000);
 	}
 
 	public GeneticAlgorithm(int[][][] shiftRequests,
@@ -46,7 +46,7 @@ public class GeneticAlgorithm implements Algorithm {
 	                        float crossoverRate,
 	                        float mutationRate,
 	                        float randomizeRate) {
-		this(shiftRequests, necessaryWorkers, 5000);
+		this(shiftRequests, necessaryWorkers, 15000);
 
 		this.populationSize = populationSize;
 		this.crossoverRate = crossoverRate;
@@ -128,10 +128,9 @@ public class GeneticAlgorithm implements Algorithm {
 			stopTime = System.currentTimeMillis();
 			runTimeInMili = stopTime - startTime;
 
-			if (generationCount < 10 ||
-					generationCount == 1000) {
-				population.printToFileWithFitness(generationCount);
-			}
+//			if (generationCount < 10) {
+//				population.printToFileWithFitness(generationCount);
+//			}
 		}
 
 		System.out.println("\nSolution found in generation " + generationCount);
