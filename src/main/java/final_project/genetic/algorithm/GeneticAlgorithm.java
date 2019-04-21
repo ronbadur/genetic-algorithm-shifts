@@ -1,14 +1,13 @@
 package final_project.genetic.algorithm;
 
 import final_project.common.Algorithm;
-import final_project.common.ConstraintEnum;
+import final_project.common.AlgorithmRunner;
+import final_project.common.DynamicAlgorithmRunner;
 import final_project.genetic.entities.Constraint;
 import final_project.genetic.entities.Individual;
 import final_project.genetic.entities.Population;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -73,11 +72,20 @@ public class GeneticAlgorithm implements Algorithm {
 
 	@Override
 	public int[][][] scheduleShifts() {
+		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
+		int [][][] initialChromosome = dynamicAlgorithmRunner.run(this.algorithmConstraints.getConstraints(), this.necessaryWorkers);
+		try {
+			population.initializePopulation(initialChromosome, this.populationSize);
+		} catch (Exception e) {
+			System.out.print(e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
 
-		population.initializePopulation(this.populationSize);
 		population.calculateFitness(algorithmConstraints);
 
 		System.out.println("Generation: " + generationCount + " Fittest: " + population.getFittest().fitness);
+		population.printToFileWithFitness(generationCount);
 
 		//While population gets an individual with maximum fitness
 		while ((!isPopulationEqualToPrev(population)) &&

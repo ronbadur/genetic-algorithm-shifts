@@ -13,6 +13,22 @@ public class Individual implements Comparable {
     public int[][][] genes;
     Random rn;
 
+    public Individual(int[][][] initChromosome, int necessaryWorkers) {
+        this.numberOfWorkers = initChromosome.length;
+        this.numberOfDays = initChromosome[0].length;
+        this.numberOfShifts = initChromosome[0][0].length;
+        this.necessaryWorkers = necessaryWorkers;
+        this.genes = new int[this.numberOfWorkers][this.numberOfDays][this.numberOfShifts];
+
+        for (int worker = 0; worker < this.numberOfWorkers; worker++) {
+            for (int day = 0; day < this.numberOfDays; day++) {
+                for (int shift = 0; shift < this.numberOfShifts; shift++) {
+                    this.genes[worker][day][shift] = initChromosome[worker][day][shift];
+                }
+            }
+        }
+    }
+
     public Individual(int numberOfWorkers, int numberOfDays, int numberOfShifts, int necessaryWorkers) {
         this.numberOfWorkers = numberOfWorkers;
         this.numberOfDays= numberOfDays;

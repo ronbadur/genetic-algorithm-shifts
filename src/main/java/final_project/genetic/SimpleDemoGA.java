@@ -25,21 +25,22 @@ public class SimpleDemoGA {
 		int populationSize = 50;
 		int[][][] manualConstraints = {
 				{
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()},
-						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()},
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue()}
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
-						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()}
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
-						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()}
-				}
+						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
+				},
+
 		};
 
 		GeneticAlgorithm genAlgo = new GeneticAlgorithm(manualConstraints, 2);

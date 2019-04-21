@@ -13,7 +13,7 @@ public class Population {
     private int numberOfDays;
     private int numberOfShifts;
     private int necessaryWorkers;
-
+    private static Random rn;
     public TreeSet<Individual> individuals;
 
     // Before checking this values, you need to run calculateFitness
@@ -26,11 +26,9 @@ public class Population {
         this.numberOfDays = numberOfDays;
         this.numberOfShifts = numberOfShifts;
         this.necessaryWorkers = necessaryWorkers;
-        individuals = new TreeSet<Individual>(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                Individual individual1 = (Individual)o1;
-                Individual individual2 = (Individual)o2;
+        this.rn = new Random();
+
+        individuals = new TreeSet<>((Individual individual1, Individual individual2) -> {
                 if (individual1.fitness < individual2.fitness) {
                     return 1;
                 } else if (Arrays.deepEquals(individual1.genes, individual2.genes)) {
@@ -38,13 +36,29 @@ public class Population {
                 } else {
                     return -1;
                 }
-            }
         });
     }
 
     //Initialize population
     public void add(Population population) {
         individuals.addAll(population.individuals);
+    }
+
+    public void initializePopulation(int[][][] initialChromosome, int size) throws Exception {
+        if (initialChromosome == null) {throw new Exception("initialChromosome can't be null");}
+        if (size < 1) { throw new Exception("size of population can't be less than 1");}
+
+        Individual initialIndividual = new Individual(initialChromosome, necessaryWorkers);
+
+        // Add the first chromosome
+        individuals.add(initialIndividual);
+
+        // Mash i
+        for (int i = 1; i < size; i++) {
+            int[][][] newGenes = switchGenes(initialIndividual.genes);
+            Individual newIndividual = new Individual(newGenes, necessaryWorkers);
+            individuals.add(newIndividual);
+        }
     }
 
     public void initializePopulation(int size) {
@@ -135,6 +149,40 @@ public class Population {
             System.out.printf(e.getMessage());
         }
 
+    }
+
+    private int[][][] switchGenes(int[][][] genes) {
+        int[][][] newGenes = new int[this.numberOfWorkers][this.numberOfDays][this.numberOfShifts];
+
+        // Clone
+        for (int worker = 0; worker < genes.length; worker++) {
+            for (int day = 0; day < genes[worker].length; day++) {
+                for (int shift = 0; shift < genes[worker][day].length; shift++) {
+                    newGenes[worker][day][shift] = genes[worker][day][shift];
+                }
+            }
+        }
+
+        // Add -1 is for including Zero
+        final int MAX_POINT = (numberOfWorkers * numberOfDays * numberOfShifts) - 1;
+        int switchBitsFirstPoint = this.rn.nextInt(MAX_POINT);
+        int switchBitsSecondPoint = this.rn.nextInt(MAX_POINT - switchBitsFirstPoint) + switchBitsFirstPoint;
+
+        // Calc first point
+        int workerPoint1 = switchBitsFirstPoint / (numberOfShifts * numberOfDays);
+        int dayPoint1 = (switchBitsFirstPoint % (numberOfShifts * numberOfDays)) / numberOfShifts;
+        int shiftPoint1 = switchBitsFirstPoint % numberOfShifts;
+
+        // Calc second point
+        int workerPoint2 = switchBitsSecondPoint / (numberOfShifts * numberOfDays);
+        int dayPoint2 = (switchBitsSecondPoint % (numberOfShifts * numberOfDays)) / numberOfShifts;
+        int shiftPoint2 = switchBitsSecondPoint % numberOfShifts;
+
+        int temp = newGenes[workerPoint1][dayPoint1][shiftPoint1];
+        newGenes[workerPoint1][dayPoint1][shiftPoint1] = newGenes[workerPoint2][dayPoint2][shiftPoint2];
+        newGenes[workerPoint2][dayPoint2][shiftPoint2] = temp;
+
+        return newGenes;
     }
 
     @Override
