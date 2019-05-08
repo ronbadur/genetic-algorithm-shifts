@@ -10,7 +10,8 @@ public class GeneticAlgorithmRunner implements AlgorithmRunner {
 		return genAlgo.scheduleShifts();
 	}
 
-	public int[][][] run(int[][][] constraints, int numberOfWorkersInShift,
+	public int[][][] run(int[][][] constraints,
+						 int numberOfWorkersInShift,
 	                     int populationSize,
 	                     float crossoverRate,
 	                     float mutationRate,

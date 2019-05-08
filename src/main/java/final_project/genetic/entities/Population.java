@@ -114,9 +114,19 @@ public class Population {
 
     public TreeSet<Individual> getMostFit(int numOfElementsToPull) {
         int counter = 0;
-        TreeSet result = new TreeSet();
+        TreeSet result = new TreeSet<>((Individual individual1, Individual individual2) -> {
+            if (individual1.fitness < individual2.fitness) {
+                return 1;
+            } else if (Arrays.deepEquals(individual1.genes, individual2.genes)) {
+                return 0;
+            } else {
+                return -1;
+            }
+        });
+
         for (Iterator<Individual> iter = individuals.iterator(); iter.hasNext() && counter <= numOfElementsToPull; ) {
             Individual element = iter.next();
+            counter++;
 
             result.add(element);
         }

@@ -1,12 +1,13 @@
 package final_project.api;
 
 import final_project.common.*;
+import final_project.genetic.entities.Constraint;
 import jdk.nashorn.internal.objects.NativeJSON;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,10 +51,6 @@ public class AlgorithmController {
 	@CrossOrigin(origins = "http://localhost:63343")
 	@RequestMapping("/genetic")
 	public double genetic(
-			// @RequestParam("workers") int workers,
-			// @RequestParam("days") int days,
-			// @RequestParam("shifts") int shifts,
-			// @RequestParam("necessaryWorkers") int necessaryWorkers,
 			@RequestParam("populationSize") int populationSize,
 			@RequestParam("crossoverRate") float crossoverRate,
 			@RequestParam("mutationRate") float mutationRate,
@@ -73,6 +70,16 @@ public class AlgorithmController {
 		AlgorithmScorer algorithmScorer = new AlgorithmScorer();
 
 		return algorithmScorer.score(RealData.getData(), result);
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping("/runAlgorithm")
+	@ResponseBody
+	public int[][][] runAlgorithm(@RequestBody Constraint constraints) {
+		GeneticAlgorithmRunner geneticAlgorithmRunner = new GeneticAlgorithmRunner();
+		int[][][] geneticResults = geneticAlgorithmRunner.run(constraints.getConstraints(), constraints.getNecessaryWorkers());
+
+		return geneticResults;
 	}
 
 	private int[][][] generateRandomShiftRequests(int workers, int days, int shifts) {

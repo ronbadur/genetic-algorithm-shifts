@@ -15,12 +15,12 @@
         <span id="mutationValue">Value: 0.5</span>
     </div>
     <div class="slider-container">
-        <label for="crossoverSlider">Probability for Mutation</label>
+        <label for="crossoverSlider">Probability for Crossover</label>
         <input type="range" min="0" max="10" value="5" oninput="showSlideValue('crossoverSlider', 'crossoverValue')" id="crossoverSlider">
         <span id="crossoverValue">Value: 0.5</span>
     </div>
     <div class="slider-container">
-        <label for="randomizeSlider">Probability for Mutation</label>
+        <label for="randomizeSlider">Probability for Randomize</label>
         <input type="range" min="0" max="10" value="5" oninput="showSlideValue('randomizeSlider', 'randomizeValue')" id="randomizeSlider">
         <span id="randomizeValue">Value: 0.5</span>
     </div>
@@ -31,7 +31,7 @@
     <button id="run-algorithm">Run Algorithm</button>
 </div>
 
-<table id="results">
+<table id="table-body">
 	<thead>
 		<th>Run</th>
 		<th>Parameters</th>

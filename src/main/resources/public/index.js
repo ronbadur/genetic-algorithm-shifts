@@ -8,26 +8,25 @@ const geneticParameters = [];
 const geneticResults = [];
 
 document.getElementById('run-algorithm').addEventListener('click', ()=>{
-	const mutationRate = document.getElementById('mutationSilder').value;
-	const crossoverRate = document.getElementById('crossoverSlider').value;
-	const randomizeRate = document.getElementById('randomizeSlider').value;
+	const mutationRate = document.getElementById('mutationSilder').value / 10;
+	const crossoverRate = document.getElementById('crossoverSlider').value / 10;
+	const randomizeRate = document.getElementById('randomizeSlider').value / 10;
 	const populationSize = document.getElementById('populationSize').value;
-	
-	fetch(`http://localhost:8080/genetic?mutationRate=${mutationRate}&crossoverRate=${crossoverRate}&randomizeRate=${randomizeRate}&populationSize=${populationSize}`)
-	.then(score=>{
-		geneticParameters.push({
-			mutationRate,
-			crossoverRate,
-			randomizeRate,
-			populationSize
-		});
-		
-		geneticResults.push(score);
-		
-		createTableElement(geneticResults.length, geneticParameters[geneticParameters.length - 1], score);
-		
-		// @TODO: Build another point on the graph with the function at the bottom
-	});
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", `http://localhost:8080/genetic?mutationRate=${mutationRate}&crossoverRate=${crossoverRate}&randomizeRate=${randomizeRate}&populationSize=${populationSize}`, false ); // false for synchronous request
+    xmlHttp.send( null );
+    let score = xmlHttp.responseText;
+    geneticParameters.push({
+        mutationRate,
+        crossoverRate,
+        randomizeRate,
+        populationSize
+    });
+
+    geneticResults.push(score);
+
+    createTableElement(geneticResults.length, geneticParameters[geneticParameters.length - 1], score);
 });
 
 function createTableElement(index, params, score){

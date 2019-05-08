@@ -31,7 +31,7 @@ public class Individual implements Comparable {
 
     public Individual(int numberOfWorkers, int numberOfDays, int numberOfShifts, int necessaryWorkers) {
         this.numberOfWorkers = numberOfWorkers;
-        this.numberOfDays= numberOfDays;
+        this.numberOfDays = numberOfDays;
         this.numberOfShifts = numberOfShifts;
         this.necessaryWorkers = necessaryWorkers;
 
@@ -85,7 +85,7 @@ public class Individual implements Comparable {
         return result;
     }
 
-    public String getPrintableObject(){
+    public String getPrintableObject() {
         StringBuilder result = new StringBuilder();
         result.append("------------------\n");
         result.append(getPrintableMatrix(genes));
@@ -93,7 +93,7 @@ public class Individual implements Comparable {
         return result.toString();
     }
 
-    public void print(){
+    public void print() {
         System.out.println("------------------");
         printMatrix(genes);
     }
@@ -103,13 +103,13 @@ public class Individual implements Comparable {
 
         for (int worker = 0; worker < matrix.length; worker++) {
             result.append("man " + worker + ":");
-            for(int shift = 0; shift < matrix[worker][0].length; shift++) {
+            for (int shift = 0; shift < matrix[worker][0].length; shift++) {
                 result.append("shift " + shift + "|");
             }
             result.append("\n");
             for (int day = 0; day < matrix[worker].length; day++) {
                 result.append("day " + day + ";");
-                for(int shift = 0; shift < matrix[worker][day].length; shift++) {
+                for (int shift = 0; shift < matrix[worker][day].length; shift++) {
                     result.append("    " + matrix[worker][day][shift]);
                     result.append("    ");
                 }
@@ -123,13 +123,13 @@ public class Individual implements Comparable {
     public static void printMatrix(int[][][] matrix) {
         for (int worker = 0; worker < matrix.length; worker++) {
             System.out.printf("man " + worker + ":");
-            for(int shift = 0; shift < matrix[worker][0].length; shift++) {
+            for (int shift = 0; shift < matrix[worker][0].length; shift++) {
                 System.out.printf("shift " + shift + "|");
             }
             System.out.println();
             for (int day = 0; day < matrix[worker].length; day++) {
-                System.out.printf("day " + day +";");
-                for(int shift = 0; shift < matrix[worker][day].length; shift++) {
+                System.out.printf("day " + day + ";");
+                for (int shift = 0; shift < matrix[worker][day].length; shift++) {
                     System.out.printf("%4d", matrix[worker][day][shift]);
                     System.out.printf("    ");
                 }
@@ -142,20 +142,30 @@ public class Individual implements Comparable {
     public void calcFitness(Constraint constraints) {
         fitness = 0;
 
-        if (this.isValid()) {
-            for (int worker = 0; worker < genes.length; worker++) {
-                for (int day = 0; day < genes[worker].length; day++) {
-                    for (int shift = 0; shift < genes[worker][day].length; shift++) {
-                        int a = constraints.getConstraints()[worker][day][shift];
-                        fitness += Math.log10(a) *
-                                genes[worker][day][shift];
-                    }
+        int numOfDoubleShifts = numberOfDoubleShifts();
+        int numOfUnoccupiedShifts = numOfUnoccupiedShifts();
+
+        fitness = fitness - (numOfDoubleShifts * 20);
+        fitness = fitness - (numOfUnoccupiedShifts * 30);
+
+        for (int worker = 0; worker < genes.length; worker++) {
+            for (int day = 0; day < genes[worker].length; day++) {
+                for (int shift = 0; shift < genes[worker][day].length; shift++) {
+                    int a = constraints.getConstraints()[worker][day][shift];
+                    fitness += Math.log10(a) *
+                            genes[worker][day][shift];
                 }
             }
         }
     }
 
-    private final boolean isAllShitOccupied() {
+    /**
+     * We don't want a shift without the minimum necessary workers
+     *
+     * @return the number of unoccupied shifts in the Individual.
+     */
+    private final int numOfUnoccupiedShifts() {
+        int numOfShiftsThatNotOccupied = 0;
 
         for (int day = 0; day < genes[0].length; day++) {
             for (int shift = 0; shift < genes[0][day].length; shift++) {
@@ -164,47 +174,23 @@ public class Individual implements Comparable {
                     workersInShift += genes[worker][day][shift];
                 }
                 if (workersInShift != this.necessaryWorkers) {
-                    return false;
+                    numOfShiftsThatNotOccupied++;
                 }
             }
 
         }
 
-        return true;
-    }
-
-    private final boolean isValid() {
-        if (isDoubleShift() || !isAllShitOccupied()) {
-            return false;
-        } else {
-            return true;
-        }
-//        //Set genes randomly for each individual
-//        for (int day = 0; day < genes[0].length; day++) {
-//            for (int shift = 0; shift < genes[0][day].length; shift++) {
-//                int numOfWorkersInShift = 0;
-//
-//                for (int worker = 0; worker < genes.length; worker++) {
-//                    if (genes[worker][day][shift] == 1) {
-//                        numOfWorkersInShift++;
-//                    }
-//                }
-//
-//                if (numOfWorkersInShift != necessaryWorkers) {
-//                    return false;
-//                }
-//            }
-//        }
-//
-//        return true;
+        return numOfShiftsThatNotOccupied;
     }
 
     /**
      * We don't want the worker to work 2 shifts one after the other
-     * @return true if there is a double shifting in this Individual. else otherwise
+     *
+     * @return the number of double shifting in this Individual.
      */
-    private final boolean isDoubleShift() {
+    private final int numberOfDoubleShifts() {
         // (Used in the loop) Represent if the worker did work it the shift before
+        int numOfDoubleShifts = 0;
         boolean isWorkingThePrevShift;
 
         for (int worker = 0; worker < genes.length; worker++) {
@@ -215,7 +201,7 @@ public class Individual implements Comparable {
                     if (genes[worker][day][shift] == 1) {
                         // We don't want the worker to work 2 shifts one after the other
                         if (isWorkingThePrevShift) {
-                            return true;
+                            numOfDoubleShifts++;
                         } else {
                             isWorkingThePrevShift = true;
                         }
@@ -225,12 +211,12 @@ public class Individual implements Comparable {
                 }
             }
         }
-        return false;
+        return numOfDoubleShifts;
     }
 
     @Override
     public int compareTo(Object o) {
-        Individual individual2 = (Individual)o;
+        Individual individual2 = (Individual) o;
         if (fitness > individual2.fitness) {
             return -1;
         } else if (fitness == individual2.fitness) {
@@ -255,7 +241,7 @@ public class Individual implements Comparable {
 
     @Override
     public Individual clone() {
-        Individual a = new Individual(numberOfWorkers,  numberOfDays, numberOfShifts, necessaryWorkers);
+        Individual a = new Individual(numberOfWorkers, numberOfDays, numberOfShifts, necessaryWorkers);
         a.fitness = fitness;
 
         for (int worker = 0; worker < genes.length; worker++) {

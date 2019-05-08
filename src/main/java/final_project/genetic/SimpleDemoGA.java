@@ -26,10 +26,10 @@ public class SimpleDemoGA {
 		int[][][] manualConstraints = {
 				{
 						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
-						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
-						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
 						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
@@ -37,7 +37,7 @@ public class SimpleDemoGA {
 						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
 				},
 				{
-						{ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
+						{ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()},
 						{ConstraintEnum.Available.getValue(), ConstraintEnum.NotAvailable.getValue(), ConstraintEnum.Available.getValue(), ConstraintEnum.Available.getValue()}
 				},
 

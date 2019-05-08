@@ -8,16 +8,15 @@ public class Constraint {
 
     private int[][][] constraints;
     private int necessaryWorkers;
-    private int numberOfDays;
-    private int numberOfShifts;
+
+    public Constraint() {
+    }
 
     public Constraint(int[][][] constraints) {
         this.constraints = constraints;
     }
 
     public Constraint(int numberOfWorkers, int numberOfDays, int numberOfShifts, int necessaryWorkers) {
-        this.numberOfDays = numberOfDays;
-        this.numberOfShifts = numberOfShifts;
         this.necessaryWorkers = necessaryWorkers;
         constraints = new int[numberOfWorkers][numberOfDays][numberOfShifts];
         Random rn = new Random();
@@ -44,7 +43,22 @@ public class Constraint {
         return constraints;
     }
 
+    public int getNecessaryWorkers() {
+        return necessaryWorkers;
+    }
+
+
+    public void setConstraints(int[][][] constraints) {
+        this.constraints = constraints;
+    }
+
+    public void setNecessaryWorkers(int necessaryWorkers) {
+        this.necessaryWorkers = necessaryWorkers;
+    }
+
+
+
     private int maxFitnessCanBe() {
-        return numberOfDays * numberOfShifts * necessaryWorkers;
+        return this.constraints[0].length * this.constraints[0][0].length  * necessaryWorkers;
     }
 }
