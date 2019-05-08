@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+
 public class GeneticAlgorithm implements Algorithm {
 
 	// Algorithm start time
