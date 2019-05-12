@@ -76,10 +76,10 @@ public class AlgorithmController {
 	@RequestMapping("/runAlgorithm")
 	@ResponseBody
 	public int[][][] runAlgorithm(@RequestBody Constraint constraints) {
-		GeneticAlgorithmRunner geneticAlgorithmRunner = new GeneticAlgorithmRunner();
-		int[][][] geneticResults = geneticAlgorithmRunner.run(constraints.getConstraints(), constraints.getNecessaryWorkers());
+		DynamicAlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
+		int[][][] dynamicResult = dynamicAlgorithmRunner.run(constraints.getConstraints(), constraints.getNecessaryWorkers());
 
-		return geneticResults;
+		return dynamicResult;
 	}
 
 	private int[][][] generateRandomShiftRequests(int workers, int days, int shifts) {
