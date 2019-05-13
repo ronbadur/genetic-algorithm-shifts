@@ -3,6 +3,7 @@ package final_project.benchmark;
 import final_project.common.Algorithm;
 import final_project.common.AlgorithmScorer;
 import final_project.common.ConstraintEnum;
+import final_project.genetic.entities.Individual;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +15,6 @@ public class BruteForceAlgorithm implements Algorithm {
     private final int numberOfWorkers;
     private final int numberOfDays;
     private final int numberOfShifts;
-    private final AlgorithmScorer algorithmScorer = new AlgorithmScorer();
 
     public BruteForceAlgorithm(int[][][] shiftRequests, int necessaryWorkers) {
         this.shiftRequests = shiftRequests;
@@ -27,6 +27,9 @@ public class BruteForceAlgorithm implements Algorithm {
 
     @Override
     public int[][][] scheduleShifts() {
+        Individual.printMatrix(this.shiftRequests);
+        FilePrinter.getInstance().print(this.shiftRequests, "Constraint");
+
         int[][][] result = new int[this.numberOfWorkers][this.numberOfDays][this.numberOfShifts];
         ArrayList onesArray = new ArrayList();
 
@@ -45,27 +48,60 @@ public class BruteForceAlgorithm implements Algorithm {
         System.out.println("number: " + onesArray.size());
 
         // combinations of 1's that can be in result !
-        ArrayList<ArrayList<DigitSpot>> combinations = getCombinations(onesArray, 0, 0, 13, new ArrayList<ArrayList<DigitSpot>>(), new ArrayList<>());
+        int numOfShifts = this.numberOfDays * this.numberOfShifts;
+        ArrayList<ArrayList<DigitSpot>> combinations = getCombinations(onesArray, 0, 0, numOfShifts, new ArrayList<ArrayList<DigitSpot>>(), new ArrayList<>());
+        ArrayList<int[][][]> bruteforceOptionalResults = new ArrayList<>();
 
+        for (ArrayList<DigitSpot> currCombi: combinations) {
+            int[][][] currOptionalResult = new int[this.numberOfWorkers][this.numberOfDays][this.numberOfShifts];
 
-        // TODO: for loop on all the combinations, and create results from them
+            for (DigitSpot currSpot: currCombi) {
+                currOptionalResult[currSpot.workerIndex][currSpot.dayIndex][currSpot.shiftIndex] = 1;
+            }
+            bruteforceOptionalResults.add(currOptionalResult);
+        }
+
+        FilePrinter.getInstance().print(bruteforceOptionalResults);
+
+        int[][][] bestSolution = getBestSolution(bruteforceOptionalResults, this.shiftRequests);
+
+     //   FilePrinter.getInstance().print(bestSolution, "Solution");
 
         // TODO: run on all the results, and see who is the best !
 
         return null;
     }
 
+    public int[][][] getBestSolution(ArrayList<int[][][]> optionalSolutions, int[][][] constraints) {
+        AlgorithmScorer algorithmScorer =  new AlgorithmScorer();
+        int[][][] bestSolution = null;
+        double bestScore = Double.MIN_VALUE;
+        double currScore;
+
+        for (int[][][] currOptionalSolution : optionalSolutions) {
+
+            currScore = algorithmScorer.score(constraints, currOptionalSolution);
+            System.out.println("currScore: " + currScore);
+            if (bestScore <= currScore) {
+                bestScore = currScore;
+                bestSolution = currOptionalSolution;
+            }
+        }
+
+        return bestSolution;
+    }
+
     public ArrayList<ArrayList<DigitSpot>> getCombinations(ArrayList<DigitSpot> digitSpots,
-                                         int i, int x, int k,
+                                         int i, int x, int numOfShifts,
                                          ArrayList<ArrayList<DigitSpot>> combinations, ArrayList<DigitSpot> newCombination) {
 
-        if (newCombination.size() < k) {
+        if (newCombination.size() < numOfShifts) {
             for (int j = x; j < digitSpots.size(); j++) {
-                System.out.println("i: " +  i+ ", j: " + j + ", x: " + x);
-                System.out.println(digitSpots.get(j).toString());
+                //System.out.println("i: " +  i+ ", j: " + j + ", x: " + x);
+                //System.out.println(digitSpots.get(j).toString());
 
                 newCombination.add(digitSpots.get(j));
-                getCombinations(digitSpots, i + 1, j + 1, k, combinations, cloneArrayList(newCombination));
+                getCombinations(digitSpots, i + 1, j + 1, numOfShifts, combinations, cloneArrayList(newCombination));
                 newCombination.clear();
             }
 

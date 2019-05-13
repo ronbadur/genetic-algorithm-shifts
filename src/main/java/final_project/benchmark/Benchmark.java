@@ -1,7 +1,9 @@
 package final_project.benchmark;
 
 import final_project.common.BruteForceAlgorithmRunner;
+import final_project.common.DynamicAlgorithmRunner;
 import final_project.genetic.entities.Constraint;
+import final_project.genetic.entities.Individual;
 
 import java.util.Random;
 
@@ -13,7 +15,7 @@ class Benchmark {
 
     public static void main(String[] args) {
         int[] CONSTRAINTS_OPTIONS = {1, 10, 100, 1000};
-        int NUM_OF_WORKERS = 3;
+        int NUM_OF_WORKERS = 2;
         int NUM_OF_DAYS = 3;
         int NUM_OF_SHIFTS = 3;
         int NUM_OF_WORKERS_IN_SHIFT = 1;
@@ -24,11 +26,19 @@ class Benchmark {
 
         Constraint constraintsObj = new Constraint(constraints);
         constraintsObj.print();
+        long startTime = System.currentTimeMillis();
+        int[][][] bruteForceResult = new BruteForceBinaryAlgorithm().run(constraints, NUM_OF_WORKERS_IN_SHIFT);
+        long endTime = System.currentTimeMillis();
+        System.out.println("\n\nbruteForce time in mili: " + (endTime - startTime) + "ms result:");
+        Individual.printMatrix(bruteForceResult);
 
-        int[][][] bestResult = new BruteForceAlgorithmRunner().run(constraints, NUM_OF_WORKERS_IN_SHIFT);
+        startTime = System.currentTimeMillis();
+        int[][][] dynamicResult = new DynamicAlgorithmRunner().run(constraints, NUM_OF_WORKERS_IN_SHIFT);
+        endTime = System.currentTimeMillis();
 
-    //    Constraint bestResultsObj = new Constraint(bestResult);
-      //  bestResultsObj.print();
+        System.out.println("\n\n=======================================");
+        System.out.println("dynamic time in mili: " + (endTime - startTime) + "ms result:");
+        Individual.printMatrix(dynamicResult);
     }
 
     private static int[][][] getRandomConstraints(int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS,int[] CONSTRAINTS_OPTIONS, Random rn) {
