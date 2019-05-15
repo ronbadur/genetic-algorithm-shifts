@@ -79,7 +79,7 @@ public class GeneticAlgorithm implements Algorithm {
 		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
 		int [][][] initialChromosome = dynamicAlgorithmRunner.run(this.algorithmConstraints.getConstraints(), this.necessaryWorkers);
 		try {
-			population.initializePopulation(initialChromosome, this.populationSize);
+			population.initializePopulation(this.populationSize);
 		} catch (Exception e) {
 			System.out.print(e.getMessage());
 			e.printStackTrace();
