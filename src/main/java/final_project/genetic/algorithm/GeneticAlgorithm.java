@@ -74,10 +74,11 @@ public class GeneticAlgorithm implements Algorithm {
 	public static void main(String[] args) {
 
 	}
+
 	@Override
 	public int[][][] scheduleShifts() {
 		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
-		int [][][] initialChromosome = dynamicAlgorithmRunner.run(this.algorithmConstraints.getConstraints(), this.necessaryWorkers);
+		int[][][] initialChromosome = dynamicAlgorithmRunner.run(this.algorithmConstraints.getConstraints(), this.necessaryWorkers);
 		try {
 			population.initializePopulation(this.populationSize);
 		} catch (Exception e) {
@@ -91,7 +92,7 @@ public class GeneticAlgorithm implements Algorithm {
 		System.out.println("Generation: " + generationCount + " Fittest: " + population.getFittest().fitness);
 		population.printToFileWithFitness(generationCount);
 
-		//While population gets an individual with maximum fitness
+		// While population gets an individual with maximum fitness
 		while ((!isPopulationEqualToPrev(population)) &&
 				(!isTimePassed(runTimeInMili)) &&
 				(!isMaxFitted(population.fittest))) {

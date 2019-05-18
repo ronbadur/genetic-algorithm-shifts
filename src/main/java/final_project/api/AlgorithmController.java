@@ -2,12 +2,8 @@ package final_project.api;
 
 import final_project.common.*;
 import final_project.genetic.entities.Constraint;
-import jdk.nashorn.internal.objects.NativeJSON;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,7 +12,7 @@ import java.util.Random;
 public class AlgorithmController {
 	private AlgorithmComparison algorithmComparison = new AlgorithmComparison();
 
-	@CrossOrigin(origins = "http://localhost:63343")
+	@CrossOrigin(origins = {"http://localhost:63343", "http://localhost:63342"})
 	@RequestMapping("/runStatistics")
 	public List<ComparisonResult> runStatistics(
 			@RequestParam("workers") int workers,
@@ -34,7 +30,7 @@ public class AlgorithmController {
 		return comparisonResultsList;
 	}
 
-	@CrossOrigin(origins = "http://localhost:63343")
+	@CrossOrigin(origins = {"http://localhost:63343", "http://localhost:63342"})
 	@RequestMapping("/realData")
 	public AlgorithmsResults realData() {
 		AlgorithmRunner dynamicAlgorithmRunner = new DynamicAlgorithmRunner();
@@ -48,7 +44,7 @@ public class AlgorithmController {
 		return algorithmsResults;
 	}
 
-	@CrossOrigin(origins = "http://localhost:63343")
+	@CrossOrigin(origins = {"http://localhost:63343", "http://localhost:63342"})
 	@RequestMapping("/genetic")
 	public double genetic(
 			@RequestParam("populationSize") int populationSize,
