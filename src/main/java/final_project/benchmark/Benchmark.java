@@ -1,9 +1,7 @@
 package final_project.benchmark;
 
-import final_project.common.BruteForceAlgorithmRunner;
+import final_project.common.AlgorithmScorer;
 import final_project.common.DynamicAlgorithmRunner;
-import final_project.genetic.entities.Constraint;
-import final_project.genetic.entities.Individual;
 
 import java.util.Random;
 
@@ -11,68 +9,67 @@ import java.util.Random;
  *
  */
 class Benchmark {
+	public static void main(String[] args) {
+		int[] CONSTRAINTS_OPTIONS = {1, 10, 100, 1000};
+		int NUM_OF_WORKERS = 4;
+		int NUM_OF_DAYS = 2;
+		int NUM_OF_SHIFTS = 3;
+		int NUM_OF_WORKERS_IN_SHIFT = 2;
 
+		Random rn = new Random();
 
-    public static void main(String[] args) {
-        int[] CONSTRAINTS_OPTIONS = {1, 10, 100, 1000};
-        int NUM_OF_WORKERS = 2;
-        int NUM_OF_DAYS = 3;
-        int NUM_OF_SHIFTS = 3;
-        int NUM_OF_WORKERS_IN_SHIFT = 1;
+		int[][][] constraints = getRandomConstraints(NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS, CONSTRAINTS_OPTIONS, rn);
 
-        Random rn = new Random();
+		System.out.println("Ratio: " + getScoreRatioToOptimal(constraints, NUM_OF_WORKERS_IN_SHIFT));
+	}
 
-        int[][][] constraints = getRandomConstraints(NUM_OF_WORKERS, NUM_OF_DAYS, NUM_OF_SHIFTS, CONSTRAINTS_OPTIONS, rn);
+	static double getScoreRatioToOptimal(int[][][] constraints, int numberOfNecessaryWorkers) {
+		int[][][] dynamicResult = new DynamicAlgorithmRunner().run(constraints, numberOfNecessaryWorkers);
+		int[][][] bruteForceResult = new BruteForceBinaryAlgorithm().run(constraints, numberOfNecessaryWorkers);
 
-        Constraint constraintsObj = new Constraint(constraints);
-        constraintsObj.print();
-        long startTime = System.currentTimeMillis();
-        int[][][] bruteForceResult = new BruteForceBinaryAlgorithm().run(constraints, NUM_OF_WORKERS_IN_SHIFT);
-        long endTime = System.currentTimeMillis();
-        System.out.println("\n\nbruteForce time in mili: " + (endTime - startTime) + "ms result:");
-        Individual.printMatrix(bruteForceResult);
+		AlgorithmScorer algorithmScorer = new AlgorithmScorer();
 
-        startTime = System.currentTimeMillis();
-        int[][][] dynamicResult = new DynamicAlgorithmRunner().run(constraints, NUM_OF_WORKERS_IN_SHIFT);
-        endTime = System.currentTimeMillis();
+		double dynamicSolutionScore = algorithmScorer.score(constraints, dynamicResult);
+		System.out.println("Dynamic Score: " + dynamicSolutionScore);
 
-        System.out.println("\n\n=======================================");
-        System.out.println("dynamic time in mili: " + (endTime - startTime) + "ms result:");
-        Individual.printMatrix(dynamicResult);
-    }
+		double optimalSolutionScore = algorithmScorer.score(constraints, bruteForceResult);
+		System.out.println("Optimal Score: " + optimalSolutionScore);
 
-    private static int[][][] getRandomConstraints(int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS,int[] CONSTRAINTS_OPTIONS, Random rn) {
-        int[][][] constraints = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
+		return dynamicSolutionScore / optimalSolutionScore;
+	}
 
-        // Initialize all to Available
-        for (int dayIndex = 0; dayIndex < NUM_OF_DAYS; dayIndex++) {
-            for (int shiftIndex = 0; shiftIndex < NUM_OF_SHIFTS; shiftIndex++) {
-                for (int workerIndex = 0; workerIndex < NUM_OF_WORKERS; workerIndex++) {
-                    constraints[workerIndex][dayIndex][shiftIndex] = CONSTRAINTS_OPTIONS[3];
-                }
-            }
-        }
+	private static int[][][] getRandomConstraints(int NUM_OF_WORKERS, int NUM_OF_DAYS, int NUM_OF_SHIFTS, int[] CONSTRAINTS_OPTIONS, Random rn) {
+		int[][][] constraints = new int[NUM_OF_WORKERS][NUM_OF_DAYS][NUM_OF_SHIFTS];
 
-        // Insert random constraints
-        for (int dayIndex = 0; dayIndex < NUM_OF_DAYS; dayIndex++) {
-            for (int shiftIndex = 0; shiftIndex < NUM_OF_SHIFTS; shiftIndex++) {
-                for (int workerIndex = 0; workerIndex < NUM_OF_WORKERS; workerIndex++) {
+		// Initialize all to Available
+		for (int dayIndex = 0; dayIndex < NUM_OF_DAYS; dayIndex++) {
+			for (int shiftIndex = 0; shiftIndex < NUM_OF_SHIFTS; shiftIndex++) {
+				for (int workerIndex = 0; workerIndex < NUM_OF_WORKERS; workerIndex++) {
+					constraints[workerIndex][dayIndex][shiftIndex] = CONSTRAINTS_OPTIONS[3];
+				}
+			}
+		}
 
-                    if (canWorkerHaveConstraintThatShift(workerIndex, shiftIndex, dayIndex, NUM_OF_SHIFTS)) {
-                        constraints[workerIndex][dayIndex][shiftIndex] = CONSTRAINTS_OPTIONS[rn.nextInt(4)];
-                    }
-                }
-            }
-        }
+		// Insert random constraints
+		for (int dayIndex = 0; dayIndex < NUM_OF_DAYS; dayIndex++) {
+			for (int shiftIndex = 0; shiftIndex < NUM_OF_SHIFTS; shiftIndex++) {
+				for (int workerIndex = 0; workerIndex < NUM_OF_WORKERS; workerIndex++) {
 
-        return constraints;
-    }
+					if (canWorkerHaveConstraintThatShift(workerIndex, shiftIndex, dayIndex, NUM_OF_SHIFTS)) {
+						constraints[workerIndex][dayIndex][shiftIndex] = CONSTRAINTS_OPTIONS[rn.nextInt(4)];
+					}
+				}
+			}
+		}
 
-    static boolean canWorkerHaveConstraintThatShift(int workerIndex, int shift, int day, int numberOfShifts) {
-        boolean result;
+		return constraints;
+	}
 
-        result = ((numberOfShifts * day) + shift + workerIndex) % 2 == 0;
+	static boolean canWorkerHaveConstraintThatShift(int workerIndex, int shift, int day, int numberOfShifts) {
+		boolean result;
 
-        return result;
-    }
+		result = ((numberOfShifts * day) + shift + workerIndex) % 2 == 0;
+
+		return result;
+	}
 }
